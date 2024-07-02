@@ -1,0 +1,16 @@
+{
+  "name": "react-project-setup",
+  "version": "1.0.0",
+  "description": "RS School Stage 3 (React) first task",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daria Pashkova",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  }
+}
