@@ -8,7 +8,9 @@ module.exports = {
     ],
     ignorePatterns: ['dist', '.eslintrc.cjs'],
     parser: '@typescript-eslint/parser',
-    plugins: ['react-refresh'],
+    plugins: ['react-refresh',
+       "react-compiler"
+    ],
     parserOptions: {
       ecmaVersion: 2020,
       sourceType: 'module',
@@ -30,6 +32,7 @@ module.exports = {
       'import/prefer-default-export': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
       'no-nested-ternary': 'off',
+      "react-compiler/react-compiler": "error"
     },
   }
   
