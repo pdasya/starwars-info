@@ -12,7 +12,7 @@ class Search extends Component {
             className={styles.searchInput}
             placeholder="Search..."
           />
-          <button className={styles.searchButton}>🖤</button>
+          <button className={styles.searchButton}>Search</button>
         </div>
       </div>
     );
