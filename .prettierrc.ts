@@ -18,7 +18,7 @@ const prettierNativeConfig = {
   trailingComma: "all",
   bracketSameLine: true,
   printWidth: 100,
-  endOfLine: "crlf",
+  endOfLine: "lf",
 };
 
 const pluginsConfigConcat = () =>

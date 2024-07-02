@@ -2,7 +2,6 @@
   "name": "react-project-setup",
   "version": "1.0.0",
   "description": "RS School Stage 3 (React) first task",
-  "main": "index.ts",
   "scripts": {
     "dev": "vite --open",
     "build": "tsc -b && vite build",
