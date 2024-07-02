@@ -1,5 +1,40 @@
-:root {
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+.resultsWrapper {
+  max-width: 1920px;
+  width: 100vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.characterCard {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.characterName {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.characterDetails {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+  text-align: left;
+}
+
+.characterDetails li {
+  margin: 10px 0;
+}
+
+.characterDetails strong {
+  color: #555;
 }

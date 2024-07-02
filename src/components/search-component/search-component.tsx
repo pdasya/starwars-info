@@ -5,7 +5,9 @@ class Search extends Component {
   render() {
     return (
       <div className={styles.searchWrapper}>
-        <h1>Find your favourite Star Wars Item!</h1>
+        <h1 className={styles.searchHeader}>
+          Find your favourite Star Wars Character!
+        </h1>
         <div className={styles.searchContainer}>
           <input
             type="text"
