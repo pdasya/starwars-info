@@ -2,10 +2,12 @@ import { Component } from "react";
 import Search from "../components/search-component/search-component";
 import Result from "../components/results-component/results-component";
 import { Character, fetchCharacters } from "../API/fetchResults";
+import styles from "./main.module.css";
 
 interface MainState {
   searchTerm: string;
   searchResults: Character[];
+  isLoading: boolean;
 }
 
 class Main extends Component<Record<string, never>, MainState> {
@@ -14,6 +16,7 @@ class Main extends Component<Record<string, never>, MainState> {
     this.state = {
       searchTerm: localStorage.getItem("searchString") || " ",
       searchResults: [],
+      isLoading: false,
     };
   }
 
@@ -30,6 +33,7 @@ class Main extends Component<Record<string, never>, MainState> {
   handleSearch = async () => {
     const { searchTerm } = this.state;
     localStorage.setItem("searchString", searchTerm);
+    this.setState({ isLoading: true });
 
     try {
       const results = await fetchCharacters();
@@ -38,9 +42,10 @@ class Main extends Component<Record<string, never>, MainState> {
           .toLocaleLowerCase()
           .includes(searchTerm.toLocaleLowerCase()),
       );
-      this.setState({ searchResults: filteredResults });
+      this.setState({ searchResults: filteredResults, isLoading: false });
     } catch (error) {
       console.error("Error fetching characters:", error);
+      this.setState({ isLoading: false });
     }
   };
 
@@ -52,7 +57,11 @@ class Main extends Component<Record<string, never>, MainState> {
           onInputChange={this.handleInputChange}
           onSearch={this.handleSearch}
         />
-        <Result results={this.state.searchResults} />
+        {this.state.isLoading ? (
+          <div className={styles.loader}>Loading...</div>
+        ) : (
+          <Result results={this.state.searchResults} />
+        )}
       </>
     );
   }
