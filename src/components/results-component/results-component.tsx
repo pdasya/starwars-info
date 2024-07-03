@@ -17,7 +17,9 @@ class Result extends Component<ResultsProps> {
       <div className={styles.resultsWrapper}>
         {results.map((character) => (
           <div className={styles.characterCard} key={character.url}>
-            <h2 className={styles.characterName}>{character.name}</h2>
+            <h2 className={styles.characterName}>
+              {character.name.toLowerCase()}
+            </h2>
             <ul className={styles.characterDetails}>
               <li>
                 <strong>Height:</strong> {character.height} cm

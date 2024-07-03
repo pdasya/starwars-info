@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "StarJedi";
-  src: url("/Starjedi.ttf") format("truetype");
+  font-family: "Starjedi";
+  src: url("../../../public/Starjedi.ttf") format("truetype");
 }
 
 .resultsWrapper {
@@ -31,7 +31,7 @@
   font-size: 24px;
   color: #333;
 
-  font-family: "StarJedi";
+  font-family: "Starjedi";
   letter-spacing: 2px;
 }
 
