@@ -1,15 +1,18 @@
 .resultsWrapper {
   max-width: 1920px;
-  width: 100vw;
+  /* width: 100vw; */
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 20px;
+
+  margin-top: 20px;
+  padding-left: 20px;
 }
 
 .characterCard {
-  background-color: white;
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 20px;
