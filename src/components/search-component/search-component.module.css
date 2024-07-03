@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "StarJedi";
+  src: url("../../../public/Starjedi.ttf") format("truetype");
+}
+
 .searchWrapper {
   color: rgba(255, 255, 255, 0.87);
   width: 100%;
@@ -25,6 +30,8 @@
   color: transparent;
   letter-spacing: 2px;
   font-size: 48px;
+
+  font-family: "StarJedi";
 }
 
 .searchInput {
