@@ -14,34 +14,38 @@ class Main extends Component<Record<string, never>, MainState> {
   constructor(props: Record<string, never>) {
     super(props);
     this.state = {
-      searchTerm: localStorage.getItem("searchString") || " ",
+      searchTerm: localStorage.getItem("searchString") || "",
       searchResults: [],
       isLoading: false,
     };
   }
 
   componentDidMount() {
-    if (this.state.searchTerm) {
-      this.handleSearch();
-    }
+    this.handleSearch();
   }
 
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchTerm: event.target.value });
+    this.setState({ searchTerm: event.target.value.toString() });
   };
 
   handleSearch = async () => {
     const { searchTerm } = this.state;
     localStorage.setItem("searchString", searchTerm);
+
     this.setState({ isLoading: true });
 
     try {
       const results = await fetchCharacters();
-      const filteredResults = results.filter((person) =>
-        person.name
-          .toLocaleLowerCase()
-          .includes(searchTerm.toLocaleLowerCase()),
-      );
+      let filteredResults = results;
+
+      if (searchTerm.trim() !== "") {
+        filteredResults = results.filter((person) =>
+          person.name
+            .toLocaleLowerCase()
+            .includes(searchTerm.toLocaleLowerCase()),
+        );
+      }
+
       this.setState({ searchResults: filteredResults, isLoading: false });
     } catch (error) {
       console.error("Error fetching characters:", error);
