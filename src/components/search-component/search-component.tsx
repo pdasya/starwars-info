@@ -1,27 +1,13 @@
 import { ChangeEvent, Component } from "react";
 import styles from "./search-component.module.css";
 
-interface SearchState {
+interface SearchProps {
   searchTerm: string;
+  onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSearch: () => void;
 }
 
-class Search extends Component<Record<string, never>, SearchState> {
-  constructor(props: Record<string, never>) {
-    super(props);
-    this.state = {
-      searchTerm: localStorage.getItem("searchString") || " ",
-    };
-  }
-
-  handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchTerm: event.target.value });
-  };
-
-  handleSearch = () => {
-    const { searchTerm } = this.state;
-    localStorage.setItem("searchString", searchTerm);
-  };
-
+class Search extends Component<SearchProps> {
   render() {
     return (
       <div className={styles.searchWrapper}>
@@ -33,10 +19,10 @@ class Search extends Component<Record<string, never>, SearchState> {
             type="text"
             className={styles.searchInput}
             placeholder="Search..."
-            value={this.state.searchTerm}
-            onChange={this.handleInputChange}
+            value={this.props.searchTerm}
+            onChange={this.props.onInputChange}
           />
-          <button className={styles.searchButton} onClick={this.handleSearch}>
+          <button className={styles.searchButton} onClick={this.props.onSearch}>
             Search
           </button>
         </div>
