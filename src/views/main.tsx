@@ -62,7 +62,11 @@ class Main extends Component<Record<string, never>, MainState> {
           onSearch={this.handleSearch}
         />
         {this.state.isLoading ? (
-          <div className={styles.loader}>Loading...</div>
+          <div className={styles.overlay}>
+            <span className={styles.loader}>
+              <span className={styles.loaderInner}></span>
+            </span>
+          </div>
         ) : (
           <Result results={this.state.searchResults} />
         )}
