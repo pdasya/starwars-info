@@ -17,6 +17,12 @@ class Main extends Component<Record<string, never>, MainState> {
     };
   }
 
+  componentDidMount() {
+    if (this.state.searchTerm) {
+      this.handleSearch();
+    }
+  }
+
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ searchTerm: event.target.value });
   };
