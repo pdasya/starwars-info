@@ -18,6 +18,8 @@ class Main extends Component<Record<string, never>, MainState> {
       searchResults: [],
       isLoading: false,
     };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentDidMount() {
