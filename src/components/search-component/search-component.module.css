@@ -6,7 +6,7 @@
 .searchWrapper {
   color: rgba(255, 255, 255, 0.87);
   width: 100%;
-  background-image: url("https://img.freepik.com/premium-photo/night-starry-sky-high-resolution-photo_361360-1219.jpg");
+  background-image: url("/background-search.avif");
 
   display: flex;
   flex-direction: column;

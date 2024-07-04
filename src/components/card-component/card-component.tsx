@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Character } from "../../API/fetchResults";
+import { Character } from "../../API/apiTypes";
 import styles from "./card-component.module.css";
 
 interface CardProps {

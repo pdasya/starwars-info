@@ -1,30 +1,6 @@
+import { ApiResponse, Character } from "./apiTypes";
+
 const API_URL = "https://swapi.dev/api/people/";
-
-export interface Character {
-  name: string;
-  height: string;
-  mass: string;
-  hair_color: string;
-  skin_color: string;
-  eye_color: string;
-  birth_year: string;
-  gender: string;
-  homeworld: string;
-  films: string[];
-  species: string[];
-  vehicles: string[];
-  starships: string[];
-  created: string;
-  edited: string;
-  url: string;
-}
-
-export interface ApiResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: Character[];
-}
 
 export const fetchCharacters = async (): Promise<Character[]> => {
   try {

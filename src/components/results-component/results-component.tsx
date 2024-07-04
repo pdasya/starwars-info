@@ -1,6 +1,6 @@
 import { Component } from "react";
 import styles from "./results-component.module.css";
-import { Character } from "../../API/fetchResults";
+import { Character } from "../../API/apiTypes";
 import Card from "../card-component/card-component";
 
 interface ResultsProps {
