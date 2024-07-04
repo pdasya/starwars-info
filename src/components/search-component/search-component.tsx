@@ -1,4 +1,4 @@
-import { ChangeEvent, Component } from "react";
+import { ChangeEvent, KeyboardEvent, Component } from "react";
 import styles from "./search-component.module.css";
 
 interface SearchProps {
@@ -8,11 +8,17 @@ interface SearchProps {
 }
 
 class Search extends Component<SearchProps> {
+  handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      this.props.onSearch();
+    }
+  };
+
   render() {
     return (
       <div className={styles.searchWrapper}>
         <h1 className={styles.searchHeader}>
-          Find your favourite Star Wars Character!
+          Find info about your favourite Star Wars Character!
         </h1>
         <div className={styles.searchContainer}>
           <input
@@ -21,6 +27,7 @@ class Search extends Component<SearchProps> {
             placeholder="Search..."
             value={this.props.searchTerm}
             onChange={this.props.onInputChange}
+            onKeyPress={this.handleKeyPress}
           />
           <button className={styles.searchButton} onClick={this.props.onSearch}>
             Search
