@@ -1,6 +1,7 @@
 import { Component } from "react";
 import styles from "./results-component.module.css";
 import { Character } from "../../API/fetchResults";
+import Card from "../card-component/card-component";
 
 interface ResultsProps {
   results: Character[];
@@ -16,39 +17,7 @@ class Result extends Component<ResultsProps> {
     return (
       <div className={styles.resultsWrapper}>
         {results.map((character) => (
-          <div className={styles.characterCard} key={character.url}>
-            <div className={styles.characterCardContent}>
-              <h2 className={styles.characterName}>
-                {character.name.toLowerCase()}
-              </h2>
-              <ul className={styles.characterDetails}>
-                <li>
-                  <strong>Height:</strong> {character.height} cm
-                </li>
-                <li>
-                  <strong>Mass:</strong> {character.mass} kg
-                </li>
-                <li>
-                  <strong>Hair Color:</strong> {character.hair_color}
-                </li>
-                <li>
-                  <strong>Skin Color:</strong> {character.skin_color}
-                </li>
-                <li>
-                  <strong>Eye Color:</strong> {character.eye_color}
-                </li>
-                <li>
-                  <strong>Birth Year:</strong> {character.birth_year}
-                </li>
-                <li>
-                  <strong>Gender:</strong> {character.gender}
-                </li>
-              </ul>
-            </div>
-            <div className={styles.characterCardOverlay}>
-              May the Force be with you
-            </div>
-          </div>
+          <Card character={character} key={character.url} />
         ))}
       </div>
     );

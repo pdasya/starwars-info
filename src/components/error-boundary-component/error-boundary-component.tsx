@@ -27,7 +27,7 @@ class ErrorBoundary extends Component<
       return (
         <div className={styles.errorBoundaryWrapper}>
           <h1 className={styles.errorBoundaryHeader}>
-            Some rendering error happened. Please reload the page.
+            Some disturbance in the Force there is. Reload the page, you must.
           </h1>
         </div>
       );
