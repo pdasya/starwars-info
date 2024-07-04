@@ -26,10 +26,12 @@ module.exports = {
     ],
     "no-param-reassign": "off",
     "import/extensions": "off",
-    "no-console": "warn",
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "no-nested-ternary": "off",
     "react-compiler/react-compiler": "error",
+    "react/jsx-props-no-spreading": "off",
+    "no-debugger": "warn",
+    "react/require-default-props": "off",
   },
 };

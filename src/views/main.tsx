@@ -1,8 +1,9 @@
 import { Component } from "react";
 import Search from "../components/search-component/search-component";
 import Result from "../components/results-component/results-component";
-import { Character, fetchCharacters } from "../API/fetchResults";
+import { fetchCharacters } from "../API/fetchResults";
 import styles from "./main.module.css";
+import { Character } from "../API/apiTypes";
 
 interface MainState {
   searchTerm: string;
