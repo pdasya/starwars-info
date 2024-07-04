@@ -34,8 +34,8 @@ class Main extends Component<Record<string, never>, MainState> {
   }
 
   async handleSearch() {
-    const { searchTerm } = this.state;
-    localStorage.setItem("searchString", searchTerm);
+    const trimmedSearchTerm = this.state.searchTerm.trim();
+    localStorage.setItem("searchString", trimmedSearchTerm);
 
     this.setState({ isLoading: true });
 
@@ -43,11 +43,11 @@ class Main extends Component<Record<string, never>, MainState> {
       const results = await fetchCharacters();
       let filteredResults = results;
 
-      if (searchTerm.trim() !== "") {
+      if (trimmedSearchTerm.trim() !== "") {
         filteredResults = results.filter((person) =>
           person.name
             .toLocaleLowerCase()
-            .includes(searchTerm.toLocaleLowerCase()),
+            .includes(trimmedSearchTerm.toLocaleLowerCase()),
         );
       }
 
