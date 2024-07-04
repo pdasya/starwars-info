@@ -5,6 +5,7 @@ interface SearchProps {
   searchTerm: string;
   onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSearch: () => void;
+  onThrowError: () => void;
 }
 
 class Search extends Component<SearchProps> {
@@ -33,6 +34,12 @@ class Search extends Component<SearchProps> {
             Search
           </button>
         </div>
+        <button
+          className={styles.errorButton}
+          onClick={this.props.onThrowError}
+        >
+          Throw error
+        </button>
       </div>
     );
   }

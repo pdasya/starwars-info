@@ -71,6 +71,26 @@
     -webkit-text-stroke 1s ease-in;
 }
 
+.errorButton {
+  margin-top: 10px;
+
+  font-size: 16px;
+  letter-spacing: 2px;
+
+  color: black;
+  font-weight: 700;
+  background-color: white;
+  width: auto;
+  border-radius: 25px;
+  padding: 7px 9px;
+
+  font-family: "StarJedi";
+}
+
+.errorButton:hover {
+  cursor: pointer;
+}
+
 .searchButton:hover {
   background-color: white;
   -webkit-text-stroke: 1px black;

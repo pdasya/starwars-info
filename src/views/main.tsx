@@ -8,6 +8,7 @@ interface MainState {
   searchTerm: string;
   searchResults: Character[];
   isLoading: boolean;
+  isErrorThrown: boolean;
 }
 
 class Main extends Component<Record<string, never>, MainState> {
@@ -17,20 +18,22 @@ class Main extends Component<Record<string, never>, MainState> {
       searchTerm: localStorage.getItem("searchString") || "",
       searchResults: [],
       isLoading: false,
+      isErrorThrown: false,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleThrowError = this.handleThrowError.bind(this);
   }
 
   componentDidMount() {
     this.handleSearch();
   }
 
-  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ searchTerm: event.target.value.toString() });
-  };
+  }
 
-  handleSearch = async () => {
+  async handleSearch() {
     const { searchTerm } = this.state;
     localStorage.setItem("searchString", searchTerm);
 
@@ -53,15 +56,24 @@ class Main extends Component<Record<string, never>, MainState> {
       console.error("Error fetching characters:", error);
       this.setState({ isLoading: false });
     }
-  };
+  }
+
+  handleThrowError() {
+    this.setState({ isErrorThrown: true });
+  }
 
   render() {
+    if (this.state.isErrorThrown) {
+      throw new Error("Simulated render error");
+    }
+
     return (
       <>
         <Search
           searchTerm={this.state.searchTerm}
           onInputChange={this.handleInputChange}
           onSearch={this.handleSearch}
+          onThrowError={this.handleThrowError}
         />
         {this.state.isLoading ? (
           <div className={styles.overlay}>

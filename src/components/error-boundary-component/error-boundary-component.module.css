@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "StarJedi";
+  src: url("/Starjedi.ttf") format("truetype");
+}
+
+.errorBoundaryWrapper {
+  max-width: 1920px;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("https://mrwallpaper.com/images/hd/darth-vader-4k-blue-lightsaber-x1o7b80w9sr1b9iv.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.errorBoundaryHeader {
+  padding: 10px 30px;
+  font-size: 40px;
+  font-family: "StarJedi";
+}
