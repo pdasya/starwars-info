@@ -4,18 +4,13 @@ import Result from "../components/results-component/results-component";
 import { fetchCharacters } from "../API/fetchResults";
 import styles from "./main.module.css";
 import { Character } from "../API/apiTypes";
+import useSearchTerm from "../hooks/useSearchTerm";
 
 const Main: FC = () => {
-  const [searchTerm, setSearchTerm] = useState<string>(
-    localStorage.getItem("searchString") || "",
-  );
+  const [searchTerm, setSearchTerm] = useSearchTerm("searchString", "");
   const [searchResults, setSearchResults] = useState<Character[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isErrorThrown, setIsErrorThrown] = useState<boolean>(false);
-
-  useEffect(() => {
-    handleSearch();
-  }, []);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value.toString());
@@ -31,7 +26,7 @@ const Main: FC = () => {
       const results = await fetchCharacters();
       let filteredResults = results;
 
-      if (trimmedSearchTerm.trim() !== "") {
+      if (trimmedSearchTerm !== "") {
         filteredResults = results.filter((person) =>
           person.name
             .toLocaleLowerCase()
@@ -46,6 +41,10 @@ const Main: FC = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, []);
 
   const handleThrowError = () => {
     setIsErrorThrown(true);
