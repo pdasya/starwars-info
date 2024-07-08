@@ -1,44 +1,31 @@
-import { Component } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import Search from "../components/search-component/search-component";
 import Result from "../components/results-component/results-component";
 import { fetchCharacters } from "../API/fetchResults";
 import styles from "./main.module.css";
 import { Character } from "../API/apiTypes";
 
-interface MainState {
-  searchTerm: string;
-  searchResults: Character[];
-  isLoading: boolean;
-  isErrorThrown: boolean;
-}
+const Main: FC = () => {
+  const [searchTerm, setSearchTerm] = useState<string>(
+    localStorage.getItem("searchString") || "",
+  );
+  const [searchResults, setSearchResults] = useState<Character[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isErrorThrown, setIsErrorThrown] = useState<boolean>(false);
 
-class Main extends Component<Record<string, never>, MainState> {
-  constructor(props: Record<string, never>) {
-    super(props);
-    this.state = {
-      searchTerm: localStorage.getItem("searchString") || "",
-      searchResults: [],
-      isLoading: false,
-      isErrorThrown: false,
-    };
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-    this.handleThrowError = this.handleThrowError.bind(this);
-  }
+  useEffect(() => {
+    handleSearch();
+  }, []);
 
-  componentDidMount() {
-    this.handleSearch();
-  }
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value.toString());
+  };
 
-  handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ searchTerm: event.target.value.toString() });
-  }
-
-  async handleSearch() {
-    const trimmedSearchTerm = this.state.searchTerm.trim();
+  const handleSearch = async () => {
+    const trimmedSearchTerm = searchTerm.trim();
     localStorage.setItem("searchString", trimmedSearchTerm);
 
-    this.setState({ isLoading: true });
+    setIsLoading(true);
 
     try {
       const results = await fetchCharacters();
@@ -52,42 +39,41 @@ class Main extends Component<Record<string, never>, MainState> {
         );
       }
 
-      this.setState({ searchResults: filteredResults, isLoading: false });
+      setSearchResults(filteredResults);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching characters:", error);
-      this.setState({ isLoading: false });
+      setIsLoading(false);
     }
+  };
+
+  const handleThrowError = () => {
+    setIsErrorThrown(true);
+  };
+
+  if (isErrorThrown) {
+    throw new Error("Simulated render error");
   }
 
-  handleThrowError() {
-    this.setState({ isErrorThrown: true });
-  }
-
-  render() {
-    if (this.state.isErrorThrown) {
-      throw new Error("Simulated render error");
-    }
-
-    return (
-      <>
-        <Search
-          searchTerm={this.state.searchTerm}
-          onInputChange={this.handleInputChange}
-          onSearch={this.handleSearch}
-          onThrowError={this.handleThrowError}
-        />
-        {this.state.isLoading ? (
-          <div className={styles.overlay}>
-            <span className={styles.loader}>
-              <span className={styles.loaderInner}></span>
-            </span>
-          </div>
-        ) : (
-          <Result results={this.state.searchResults} />
-        )}
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Search
+        searchTerm={searchTerm}
+        onInputChange={handleInputChange}
+        onSearch={handleSearch}
+        onThrowError={handleThrowError}
+      />
+      {isLoading ? (
+        <div className={styles.overlay}>
+          <span className={styles.loader}>
+            <span className={styles.loaderInner}></span>
+          </span>
+        </div>
+      ) : (
+        <Result results={searchResults} />
+      )}
+    </>
+  );
+};
 
 export default Main;
