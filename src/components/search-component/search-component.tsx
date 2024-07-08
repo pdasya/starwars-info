@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, Component } from "react";
+import { ChangeEvent, KeyboardEvent, FC } from "react";
 import styles from "./search-component.module.css";
 
 interface SearchProps {
@@ -8,41 +8,41 @@ interface SearchProps {
   onThrowError: () => void;
 }
 
-class Search extends Component<SearchProps> {
-  handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+const Search: FC<SearchProps> = ({
+  searchTerm,
+  onInputChange,
+  onSearch,
+  onThrowError,
+}) => {
+  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      this.props.onSearch();
+      onSearch();
     }
   };
 
-  render() {
-    return (
-      <div className={styles.searchWrapper}>
-        <h1 className={styles.searchHeader}>
-          Find info about your favourite Star Wars Character!
-        </h1>
-        <div className={styles.searchContainer}>
-          <input
-            type="text"
-            className={styles.searchInput}
-            placeholder="Search..."
-            value={this.props.searchTerm}
-            onChange={this.props.onInputChange}
-            onKeyPress={this.handleKeyPress}
-          />
-          <button className={styles.searchButton} onClick={this.props.onSearch}>
-            Search
-          </button>
-        </div>
-        <button
-          className={styles.errorButton}
-          onClick={this.props.onThrowError}
-        >
-          Throw error
+  return (
+    <div className={styles.searchWrapper}>
+      <h1 className={styles.searchHeader}>
+        Find info about your favourite Star Wars Character!
+      </h1>
+      <div className={styles.searchContainer}>
+        <input
+          type="text"
+          className={styles.searchInput}
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={onInputChange}
+          onKeyPress={handleKeyPress}
+        />
+        <button className={styles.searchButton} onClick={onSearch}>
+          Search
         </button>
       </div>
-    );
-  }
-}
+      <button className={styles.errorButton} onClick={onThrowError}>
+        Throw error
+      </button>
+    </div>
+  );
+};
 
 export default Search;
