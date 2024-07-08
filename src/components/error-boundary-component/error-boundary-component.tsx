@@ -12,6 +12,7 @@ class ErrorBoundary extends Component<
   constructor(props: { children: ReactNode }) {
     super(props);
     this.state = { hasError: false };
+    this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
   static getDerivedStateFromError(): ErrorBoundaryState {
@@ -22,6 +23,10 @@ class ErrorBoundary extends Component<
     console.error("Uncaught error:", error, errorInfo);
   }
 
+  handleButtonClick() {
+    window.location.reload();
+  }
+
   render() {
     if (this.state.hasError) {
       return (
@@ -29,6 +34,12 @@ class ErrorBoundary extends Component<
           <h1 className={styles.errorBoundaryHeader}>
             Some disturbance in the Force there is. Reload the page, you must.
           </h1>
+          <button
+            className={styles.errorBoundaryButton}
+            onClick={this.handleButtonClick}
+          >
+            Back
+          </button>
         </div>
       );
     }
