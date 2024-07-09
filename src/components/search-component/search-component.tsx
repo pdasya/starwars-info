@@ -5,15 +5,9 @@ interface SearchProps {
   searchTerm: string;
   onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSearch: () => void;
-  onThrowError: () => void;
 }
 
-const Search: FC<SearchProps> = ({
-  searchTerm,
-  onInputChange,
-  onSearch,
-  onThrowError,
-}) => {
+const Search: FC<SearchProps> = ({ searchTerm, onInputChange, onSearch }) => {
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       onSearch();
@@ -42,9 +36,6 @@ const Search: FC<SearchProps> = ({
           Search
         </button>
       </div>
-      <button className={styles.errorButton} onClick={onThrowError}>
-        Throw error
-      </button>
     </div>
   );
 };

@@ -11,7 +11,6 @@ const Main: FC = () => {
   const [searchTerm, setSearchTerm] = useSearchTerm("searchString", "");
   const [searchResults, setSearchResults] = useState<Character[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isErrorThrown, setIsErrorThrown] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const searchQuery = searchParams.get("search") || "";
@@ -56,21 +55,12 @@ const Main: FC = () => {
     }
   }, [searchQuery]);
 
-  const handleThrowError = () => {
-    setIsErrorThrown(true);
-  };
-
-  if (isErrorThrown) {
-    throw new Error("Simulated render error");
-  }
-
   return (
     <>
       <Search
         searchTerm={searchTerm}
         onInputChange={handleInputChange}
         onSearch={handleSearch}
-        onThrowError={handleThrowError}
       />
       {isLoading ? (
         <div className={styles.overlay}>
