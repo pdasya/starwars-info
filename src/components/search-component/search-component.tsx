@@ -20,6 +20,10 @@ const Search: FC<SearchProps> = ({
     }
   };
 
+  const handleSubmit = () => {
+    onSearch();
+  };
+
   return (
     <div className={styles.searchWrapper}>
       <h1 className={styles.searchHeader}>
@@ -27,14 +31,14 @@ const Search: FC<SearchProps> = ({
       </h1>
       <div className={styles.searchContainer}>
         <input
-          type="text"
+          type="search"
           className={styles.searchInput}
           placeholder="Search..."
           value={searchTerm}
           onChange={onInputChange}
           onKeyPress={handleKeyPress}
         />
-        <button className={styles.searchButton} onClick={onSearch}>
+        <button className={styles.searchButton} onClick={handleSubmit}>
           Search
         </button>
       </div>

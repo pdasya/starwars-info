@@ -1,5 +1,5 @@
 import "./App.css";
-import Main from "./views/main";
+import Main from "./views/main/main";
 import ErrorBoundary from "./components/error-boundary-component/error-boundary-component";
 import {
   BrowserRouter as Router,

@@ -1,24 +1,29 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import Search from "../components/search-component/search-component";
-import Result from "../components/results-component/results-component";
-import { fetchCharacters } from "../API/fetchResults";
+import Search from "../../components/search-component/search-component";
+import Result from "../../components/results-component/results-component";
+import { fetchCharacters } from "../../API/fetchResults";
 import styles from "./main.module.css";
-import { Character } from "../API/apiTypes";
-import useSearchTerm from "../hooks/useSearchTerm";
+import { Character } from "../../API/apiTypes";
+import useSearchTerm from "../../hooks/useSearchTerm";
+import { useSearchParams } from "react-router-dom";
 
 const Main: FC = () => {
   const [searchTerm, setSearchTerm] = useSearchTerm("searchString", "");
   const [searchResults, setSearchResults] = useState<Character[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isErrorThrown, setIsErrorThrown] = useState<boolean>(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const searchQuery = searchParams.get("search") || "";
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value.toString());
   };
 
-  const handleSearch = async () => {
-    const trimmedSearchTerm = searchTerm.trim();
+  const handleSearch = async (term: string = searchTerm) => {
+    const trimmedSearchTerm = term.trim();
     localStorage.setItem("searchString", trimmedSearchTerm);
+    setSearchParams({ search: trimmedSearchTerm }, { replace: false });
 
     setIsLoading(true);
 
@@ -43,8 +48,13 @@ const Main: FC = () => {
   };
 
   useEffect(() => {
-    handleSearch();
-  }, []);
+    if (searchQuery) {
+      setSearchTerm(searchQuery);
+      handleSearch(searchQuery);
+    } else {
+      handleSearch();
+    }
+  }, [searchQuery]);
 
   const handleThrowError = () => {
     setIsErrorThrown(true);
