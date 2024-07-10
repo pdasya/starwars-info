@@ -27,7 +27,7 @@ const Main: FC = () => {
     setIsLoading(true);
 
     try {
-      const results = await fetchCharacters();
+      const results = await fetchCharacters(trimmedSearchTerm);
       let filteredResults = results;
 
       if (trimmedSearchTerm !== "") {
