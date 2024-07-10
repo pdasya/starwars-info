@@ -7,6 +7,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import ErrorPage from "./views/error-page/error-page";
 
 const App: React.FC = () => {
   return (
@@ -15,7 +16,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/main" element={<Main />} />
           <Route path="/" element={<Navigate replace to="/main" />} />
-          <Route path="*" element={<h1>404 Not Found</h1>} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </ErrorBoundary>
     </Router>
