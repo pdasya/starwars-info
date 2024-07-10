@@ -6,12 +6,15 @@ import styles from "./main.module.css";
 import { Character } from "../../API/apiTypes";
 import useSearchTerm from "../../hooks/useSearchTerm";
 import { useSearchParams } from "react-router-dom";
+import Pagination from "../../components/pagination-component/pagination-component";
 
 const Main: FC = () => {
   const [searchTerm, setSearchTerm] = useSearchTerm("searchString", "");
   const [searchResults, setSearchResults] = useState<Character[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   const searchQuery = searchParams.get("search") || "";
 
@@ -19,26 +22,20 @@ const Main: FC = () => {
     setSearchTerm(event.target.value.toString());
   };
 
-  const handleSearch = async (term: string = searchTerm) => {
+  const handleSearch = async (term: string, page: number = 1) => {
     const trimmedSearchTerm = term.trim();
     localStorage.setItem("searchString", trimmedSearchTerm);
-    setSearchParams({ search: trimmedSearchTerm }, { replace: false });
+    setSearchParams(
+      { search: trimmedSearchTerm, page: page.toString() },
+      { replace: false },
+    );
 
     setIsLoading(true);
 
     try {
-      const results = await fetchCharacters(trimmedSearchTerm);
-      let filteredResults = results;
-
-      if (trimmedSearchTerm !== "") {
-        filteredResults = results.filter((person) =>
-          person.name
-            .toLocaleLowerCase()
-            .includes(trimmedSearchTerm.toLocaleLowerCase()),
-        );
-      }
-
-      setSearchResults(filteredResults);
+      const data = await fetchCharacters(trimmedSearchTerm, page);
+      setSearchResults(data.results);
+      setTotalPages(Math.ceil(data.count / 10));
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching characters:", error);
@@ -47,20 +44,28 @@ const Main: FC = () => {
   };
 
   useEffect(() => {
+    const page = parseInt(searchParams.get("page") || "1", 10);
+    setCurrentPage(page);
+
     if (searchQuery) {
       setSearchTerm(searchQuery);
-      handleSearch(searchQuery);
+      handleSearch(searchQuery, page);
     } else {
-      handleSearch();
+      handleSearch(searchTerm, page);
     }
-  }, [searchQuery]);
+  }, [searchQuery, searchParams]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    handleSearch(searchTerm, page);
+  };
 
   return (
     <>
       <Search
         searchTerm={searchTerm}
         onInputChange={handleInputChange}
-        onSearch={handleSearch}
+        onSearch={() => handleSearch(searchTerm, 1)}
       />
       {isLoading ? (
         <div className={styles.overlay}>
@@ -69,7 +74,14 @@ const Main: FC = () => {
           </span>
         </div>
       ) : (
-        <Result results={searchResults} />
+        <>
+          <Result results={searchResults} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </>
       )}
     </>
   );
