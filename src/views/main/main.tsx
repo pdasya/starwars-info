@@ -7,6 +7,7 @@ import { Character } from "../../API/apiTypes";
 import useSearchTerm from "../../hooks/useSearchTerm";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../../components/pagination-component/pagination-component";
+import Details from "../../components/details-component/details-component";
 
 const Main: FC = () => {
   const [searchTerm, setSearchTerm] = useSearchTerm("searchString", "");
@@ -15,6 +16,10 @@ const Main: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
+    null,
+  );
+  const [isItemOpened, setIsItemOpened] = useState<boolean>(false);
 
   const searchQuery = searchParams.get("search") || "";
 
@@ -60,6 +65,15 @@ const Main: FC = () => {
     handleSearch(searchTerm, page);
   };
 
+  const handleItemClick = (character: Character) => {
+    setSelectedCharacter(character);
+    setIsItemOpened(true);
+  };
+
+  const handleItemClose = () => {
+    setIsItemOpened(false);
+  };
+
   return (
     <>
       <Search
@@ -75,12 +89,15 @@ const Main: FC = () => {
         </div>
       ) : (
         <>
-          <Result results={searchResults} />
+          <Result results={searchResults} onItemClick={handleItemClick} />
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={handlePageChange}
           />
+          {selectedCharacter && isItemOpened && (
+            <Details details={selectedCharacter} onClose={handleItemClose} />
+          )}
         </>
       )}
     </>

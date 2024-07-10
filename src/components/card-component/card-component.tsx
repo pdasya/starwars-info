@@ -4,11 +4,12 @@ import styles from "./card-component.module.css";
 
 interface CardProps {
   character: Character;
+  onClick: () => void;
 }
 
-const Card: FC<CardProps> = ({ character }) => {
+const Card: FC<CardProps> = ({ character, onClick }) => {
   return (
-    <div className={styles.characterCard} key={character.url}>
+    <div className={styles.characterCard} key={character.url} onClick={onClick}>
       <div className={styles.characterCardContent}>
         <h2 className={styles.characterName}>{character.name.toLowerCase()}</h2>
         <ul className={styles.characterDetails}>
