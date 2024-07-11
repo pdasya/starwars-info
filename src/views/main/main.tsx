@@ -1,13 +1,11 @@
 import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
-import Search from "../../components/search-component/search-component";
-import Result from "../../components/results-component/results-component";
 import { fetchCharacters } from "../../API/fetchResults";
 import styles from "./main.module.css";
 import { Character } from "../../API/apiTypes";
 import useSearchTerm from "../../hooks/useSearchTerm";
 import { useSearchParams } from "react-router-dom";
-import Pagination from "../../components/pagination-component/pagination-component";
-import Details from "../../components/details-component/details-component";
+import DetailsSection from "../../modules/details-module/details-module";
+import SearchSection from "../../modules/search-module/search-module";
 
 const Main: FC = () => {
   const [searchTerm, setSearchTerm] = useSearchTerm("searchString", "");
@@ -23,12 +21,12 @@ const Main: FC = () => {
   );
   const [isDetailLoading, setIsDetailLoading] = useState<boolean>(false);
 
+  const detailsRef = useRef<HTMLDivElement>(null);
+
   const searchQuery = searchParams.get("search") || "";
   const pageQuery =
     searchParams.get("page") || localStorage.getItem("currentPage");
   const characterQuery = searchParams.get("character") || "";
-
-  const detailsRef = useRef<HTMLDivElement>(null);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.toString();
@@ -149,43 +147,24 @@ const Main: FC = () => {
 
   return (
     <div className={styles.mainContainer} onClick={handleContainerClick}>
-      <div
-        className={`${styles.searchResults} ${selectedCharacter ? styles.blockedInteractions : ""}`}
-      >
-        <Search
-          searchTerm={searchTerm}
-          onInputChange={handleInputChange}
-          onSearch={() => handleSearch(searchTerm, 1)}
-        />
-        {isLoading ? (
-          <div className={styles.overlay}>
-            <span className={styles.loader}>
-              <span className={styles.loaderInner}></span>
-            </span>
-          </div>
-        ) : (
-          <>
-            <Result results={searchResults} onItemClick={handleItemClick} />
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
-          </>
-        )}
-      </div>
+      <SearchSection
+        searchTerm={searchTerm}
+        searchResults={searchResults}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        isLoading={isLoading}
+        onSearch={handleSearch}
+        onInputChange={handleInputChange}
+        onItemClick={handleItemClick}
+        onPageChange={handlePageChange}
+      />
       {selectedCharacter && (
-        <div className={styles.detailsSection} ref={detailsRef}>
-          {isDetailLoading ? (
-            <div className={styles.overlay}>
-              <span className={styles.loader}>
-                <span className={styles.loaderInner}></span>
-              </span>
-            </div>
-          ) : (
-            <Details details={selectedCharacter} onClose={handleItemClose} />
-          )}
-        </div>
+        <DetailsSection
+          selectedCharacter={selectedCharacter}
+          isDetailLoading={isDetailLoading}
+          detailsRef={detailsRef}
+          onClose={handleItemClose}
+        />
       )}
     </div>
   );
