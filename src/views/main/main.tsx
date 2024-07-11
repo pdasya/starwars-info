@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import Search from "../../components/search-component/search-component";
 import Result from "../../components/results-component/results-component";
 import { fetchCharacters } from "../../API/fetchResults";
@@ -23,17 +23,19 @@ const Main: FC = () => {
   );
   const [isDetailLoading, setIsDetailLoading] = useState<boolean>(false);
 
-  // const navigate = useNavigate();
   const searchQuery = searchParams.get("search") || "";
   const pageQuery =
     searchParams.get("page") || localStorage.getItem("currentPage");
-  // const detailsQuery = searchParams.get("details") || "";
+  const characterQuery = searchParams.get("character") || "";
+
+  const detailsRef = useRef<HTMLDivElement>(null);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value.toString());
+    const value = event.target.value.toString();
+    setSearchTerm(value);
 
     setCurrentPage(1);
-    setSearchParams({ search: searchTerm, page: "1" }, { replace: false });
+    setSearchParams({ search: value, page: "1" }, { replace: false });
   };
 
   const handleSearch = async (term: string, page: number = 1) => {
@@ -72,32 +74,28 @@ const Main: FC = () => {
 
   useEffect(() => {
     const page = Number(pageQuery);
-    // setCurrentPage(page);
-    // console.log(currentPage);
-
     if (searchQuery) {
       setSearchTerm(searchQuery);
       handleSearch(searchQuery, page);
     } else {
       handleSearch(searchTerm, page);
     }
-
-    // if (detailsQuery) {
-    //   const character = searchResults.find(c => c.url.split('/').slice(-2, -1)[0] === detailsQuery);
-    //   if (character) {
-    //     fetchCharacterDetails(character);
-    //   }
-    // }
   }, [searchQuery, pageQuery]);
+
+  useEffect(() => {
+    if (characterQuery) {
+      const character = searchResults.find(
+        (char) => char.name === characterQuery,
+      );
+      if (character) fetchCharacterDetails(character);
+    }
+  }, [characterQuery, searchResults]);
 
   const handlePageChange = (page: number) => {
     setSearchParams(
       {
         search: searchTerm,
         page: page.toString(),
-        details: selectedCharacter
-          ? selectedCharacter.url.split("/").slice(-2, -1)[0]
-          : "",
       },
       { replace: false },
     );
@@ -112,9 +110,6 @@ const Main: FC = () => {
         {
           search: searchTerm,
           page: currentPage.toString(),
-          details: selectedCharacter
-            ? selectedCharacter.url.split("/").slice(-2, -1)[0]
-            : "",
         },
         { replace: false },
       );
@@ -124,15 +119,15 @@ const Main: FC = () => {
   }, [currentPage]);
 
   const handleItemClick = (character: Character) => {
-    fetchCharacterDetails(character);
     setSearchParams(
       {
         search: searchTerm,
         page: currentPage.toString(),
-        details: character.url.split("/").slice(-2, -1)[0],
+        character: character.name,
       },
       { replace: false },
     );
+    fetchCharacterDetails(character);
   };
 
   const handleItemClose = () => {
@@ -143,11 +138,19 @@ const Main: FC = () => {
     setSelectedCharacter(null);
   };
 
+  const handleContainerClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (
+      detailsRef.current &&
+      !detailsRef.current.contains(event.target as Node)
+    ) {
+      handleItemClose();
+    }
+  };
+
   return (
-    <div className={styles.mainContainer}>
+    <div className={styles.mainContainer} onClick={handleContainerClick}>
       <div
-        className={`${styles.searchResults} ${selectedCharacter ? styles.withDetails : ""}`}
-        onClick={handleItemClose}
+        className={`${styles.searchResults} ${selectedCharacter ? styles.blockedInteractions : ""}`}
       >
         <Search
           searchTerm={searchTerm}
@@ -172,7 +175,7 @@ const Main: FC = () => {
         )}
       </div>
       {selectedCharacter && (
-        <div className={styles.detailsSection}>
+        <div className={styles.detailsSection} ref={detailsRef}>
           {isDetailLoading ? (
             <div className={styles.overlay}>
               <span className={styles.loader}>

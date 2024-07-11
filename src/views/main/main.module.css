@@ -78,16 +78,32 @@
 
 .searchResults {
   flex: 1;
-  transition: width 0.3s;
+  transition: opacity 0.3s ease;
 }
 
 .withDetails {
-  flex: 0.7;
+  flex: 1;
+  transition: opacity 0.3s ease;
+}
+
+.blockedInteractions {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .detailsSection {
-  flex: 0.3;
-  border-left: 1px solid #ccc;
-  padding: 1rem;
-  overflow-y: auto;
+  flex: 0.4;
+  position: relative;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
 }
