@@ -1,12 +1,48 @@
+@font-face {
+  font-family: "StarJedi";
+  src: url("/Starjedi.ttf") format("truetype");
+}
+
 .errorPageWrapper {
   background-image: url("https://getwallpapers.com/wallpaper/full/2/8/9/346037.jpg");
   background-size: cover;
   background-position: center;
   width: 100vw;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .errorPageHeader,
 .errorPageText {
+  padding-left: 100px;
+  text-align: left;
   color: white;
+  width: 400px;
+  font-family: "StarJedi";
+  text-transform: lowercase;
+}
+
+.errorPageLink {
+  display: block;
+  padding: 10px 20px;
+  margin: 20px 100px;
+  width: 400px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #007bff;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  font-family: "StarJedi";
+}
+
+.errorPageLink:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
 }
