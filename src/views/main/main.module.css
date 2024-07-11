@@ -71,3 +71,23 @@
     height: 0%;
   }
 }
+
+.mainContainer {
+  display: flex;
+}
+
+.searchResults {
+  flex: 1;
+  transition: width 0.3s;
+}
+
+.withDetails {
+  flex: 0.7;
+}
+
+.detailsSection {
+  flex: 0.3;
+  border-left: 1px solid #ccc;
+  padding: 1rem;
+  overflow-y: auto;
+}
