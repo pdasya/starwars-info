@@ -19,7 +19,6 @@ const Main: FC = () => {
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
     null,
   );
-  const [isDetailLoading, setIsDetailLoading] = useState<boolean>(false);
 
   const detailsRef = useRef<HTMLDivElement>(null);
 
@@ -58,15 +57,15 @@ const Main: FC = () => {
   };
 
   const fetchCharacterDetails = async (character: Character) => {
-    setIsDetailLoading(true);
+    setIsLoading(true);
     try {
       const response = await fetch(character.url);
       const data = await response.json();
       setSelectedCharacter(data);
-      setIsDetailLoading(false);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching character details:", error);
-      setIsDetailLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -147,21 +146,23 @@ const Main: FC = () => {
 
   return (
     <div className={styles.mainContainer} onClick={handleContainerClick}>
-      <SearchSection
-        searchTerm={searchTerm}
-        searchResults={searchResults}
-        currentPage={currentPage}
-        totalPages={totalPages}
-        isLoading={isLoading}
-        onSearch={handleSearch}
-        onInputChange={handleInputChange}
-        onItemClick={handleItemClick}
-        onPageChange={handlePageChange}
-      />
+      <div className={`${selectedCharacter ? styles.blockedInteractions : ""}`}>
+        <SearchSection
+          searchTerm={searchTerm}
+          searchResults={searchResults}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          isLoading={isLoading}
+          onSearch={handleSearch}
+          onInputChange={handleInputChange}
+          onItemClick={handleItemClick}
+          onPageChange={handlePageChange}
+        />
+      </div>
       {selectedCharacter && (
         <DetailsSection
           selectedCharacter={selectedCharacter}
-          isDetailLoading={isDetailLoading}
+          isDetailLoading={isLoading}
           detailsRef={detailsRef}
           onClose={handleItemClose}
         />
