@@ -1,7 +1,6 @@
-// Main.tsx
 import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import { fetchCharacters } from "../../API/fetchResults";
-import styles from "./main.module.css";
+import styles from "./main-page.module.css";
 import { Character } from "../../API/apiTypes";
 import useSearchTerm from "../../hooks/useSearchTerm";
 import { useSearchParams } from "react-router-dom";
@@ -14,36 +13,32 @@ const Main: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState<number>(
-    Number(localStorage.getItem("currentPage")),
+    Number(localStorage.getItem("currentPage")) || 1,
   );
   const [totalPages, setTotalPages] = useState<number>(1);
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
     null,
   );
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const detailsRef = useRef<HTMLDivElement>(null);
 
   const searchQuery = searchParams.get("search") || "";
   const pageQuery =
-    searchParams.get("page") || localStorage.getItem("currentPage");
+    Number(searchParams.get("page")) ||
+    Number(localStorage.getItem("currentPage")) ||
+    1;
   const characterQuery = searchParams.get("character") || "";
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.toString();
     setSearchTerm(value);
-
-    setCurrentPage(1);
     setSearchParams({ search: value, page: "1" }, { replace: false });
   };
 
-  const handleSearch = async (term: string, page: number = 1) => {
+  const handleSearch = async (term: string, page: number) => {
     const trimmedSearchTerm = term.trim();
     localStorage.setItem("searchString", trimmedSearchTerm);
-    setSearchParams(
-      { search: trimmedSearchTerm, page: page.toString() },
-      { replace: false },
-    );
-
     setIsLoading(true);
 
     try {
@@ -71,12 +66,12 @@ const Main: FC = () => {
   };
 
   useEffect(() => {
-    const page = Number(pageQuery);
+    setCurrentPage(pageQuery);
     if (searchQuery) {
       setSearchTerm(searchQuery);
-      handleSearch(searchQuery, page);
+      handleSearch(searchQuery, pageQuery);
     } else {
-      handleSearch(searchTerm, page);
+      handleSearch(searchTerm, pageQuery);
     }
   }, [searchQuery, pageQuery]);
 
@@ -85,7 +80,13 @@ const Main: FC = () => {
       const character = searchResults.find(
         (char) => char.name === characterQuery,
       );
-      if (character) fetchCharacterDetails(character);
+      if (character) {
+        fetchCharacterDetails(character);
+        setErrorMessage(null);
+      } else {
+        setSelectedCharacter(null);
+        setErrorMessage(`Character "${characterQuery}" not found.`);
+      }
     }
   }, [characterQuery, searchResults]);
 
@@ -103,16 +104,6 @@ const Main: FC = () => {
   };
 
   useEffect(() => {
-    if (currentPage !== Number(pageQuery)) {
-      setSearchParams(
-        {
-          search: searchTerm,
-          page: currentPage.toString(),
-        },
-        { replace: false },
-      );
-    }
-
     localStorage.setItem("currentPage", currentPage.toString());
   }, [currentPage]);
 
@@ -148,6 +139,7 @@ const Main: FC = () => {
   return (
     <div className={styles.mainContainer} onClick={handleContainerClick}>
       <div className={`${selectedCharacter ? styles.blockedInteractions : ""}`}>
+        {errorMessage && <div className={styles.error}>{errorMessage}</div>}
         <SearchSection
           searchTerm={searchTerm}
           searchResults={searchResults}
