@@ -31,6 +31,9 @@ const Main: FC = () => {
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value.toString());
+
+    setCurrentPage(1);
+    setSearchParams({ search: searchTerm, page: "1" }, { replace: false });
   };
 
   const handleSearch = async (term: string, page: number = 1) => {
@@ -99,6 +102,7 @@ const Main: FC = () => {
       { replace: false },
     );
     setCurrentPage(page);
+    localStorage.setItem("currentPage", page.toString());
     handleSearch(searchTerm, page);
   };
 
