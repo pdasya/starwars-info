@@ -1,3 +1,4 @@
+// Main.tsx
 import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import { fetchCharacters } from "../../API/fetchResults";
 import styles from "./main.module.css";
@@ -165,6 +166,7 @@ const Main: FC = () => {
           isDetailLoading={isLoading}
           detailsRef={detailsRef}
           onClose={handleItemClose}
+          isOpen={!!selectedCharacter}
         />
       )}
     </div>

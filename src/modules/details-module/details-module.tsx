@@ -1,3 +1,4 @@
+// DetailsSection.tsx
 import { FC, RefObject } from "react";
 import { Character } from "../../API/apiTypes";
 import Details from "../../components/details-component/details-component";
@@ -8,6 +9,7 @@ interface DetailsSectionProps {
   isDetailLoading: boolean;
   detailsRef: RefObject<HTMLDivElement>;
   onClose: () => void;
+  isOpen: boolean;
 }
 
 const DetailsSection: FC<DetailsSectionProps> = ({
@@ -15,9 +17,13 @@ const DetailsSection: FC<DetailsSectionProps> = ({
   isDetailLoading,
   detailsRef,
   onClose,
+  isOpen,
 }) => {
   return (
-    <div className={styles.detailsSection} ref={detailsRef}>
+    <div
+      className={`${styles.detailsSection} ${isOpen ? styles.open : ""}`}
+      ref={detailsRef}
+    >
       {isDetailLoading ? (
         <div className={styles.overlay}>
           <span className={styles.loader}>
