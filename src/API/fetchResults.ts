@@ -1,4 +1,4 @@
-import { ApiResponse } from "./apiTypes";
+import { ApiResponse, Planet, Starship, Vehicle } from "./apiTypes";
 
 export const fetchCharacters = async (
   searchItem: string,
@@ -11,6 +11,43 @@ export const fetchCharacters = async (
     return data;
   } catch (error) {
     console.error("Error fetching characters:", error);
+    throw error;
+  }
+};
+
+export const fetchStarships = async (urls: string[]): Promise<Starship[]> => {
+  try {
+    const starshipPromises = urls.map((url) =>
+      fetch(url).then((response) => response.json()),
+    );
+    const starshipResults = await Promise.all(starshipPromises);
+    return starshipResults;
+  } catch (error) {
+    console.error("Error fetching starships:", error);
+    throw error;
+  }
+};
+
+export const fetchVehicles = async (urls: string[]): Promise<Vehicle[]> => {
+  try {
+    const vehiclePromises = urls.map((url) =>
+      fetch(url).then((response) => response.json()),
+    );
+    const vehicleResults = await Promise.all(vehiclePromises);
+    return vehicleResults;
+  } catch (error) {
+    console.error("Error fetching vehicles:", error);
+    throw error;
+  }
+};
+
+export const fetchPlanet = async (url: string): Promise<Planet> => {
+  try {
+    const response = await fetch(url);
+    const planetData = await response.json();
+    return planetData;
+  } catch (error) {
+    console.error("Error fetching planet:", error);
     throw error;
   }
 };

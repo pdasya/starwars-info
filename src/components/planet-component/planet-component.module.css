@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "Starjedi";
+  src: url("/Starjedi.ttf") format("truetype");
+}
+
+.planetSection {
+  margin-top: 20px;
+  border-top: 1px solid black;
+  font-family: "Starjedi";
+  text-transform: lowercase;
+}
+
+.planetHeader {
+  text-decoration: underline;
+}

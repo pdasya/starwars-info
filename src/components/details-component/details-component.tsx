@@ -1,9 +1,9 @@
 import React from "react";
-import { Character } from "../../API/apiTypes";
+import { ICharacter } from "../../API/apiTypes";
 import styles from "./details-component.module.css";
 
 interface DetailsProps {
-  details: Character;
+  details: ICharacter;
   onClose: () => void;
 }
 
@@ -13,7 +13,7 @@ const Details: React.FC<DetailsProps> = ({ details, onClose }) => {
       <button onClick={onClose} className={styles.closeButton}>
         Close
       </button>
-      <h2>{details.name}</h2>
+      <h2 className={styles.detailsHeader}>{details.name}</h2>
       <ul className={styles.characterDetails}>
         <li>
           <strong>Height:</strong> {details.height} cm
