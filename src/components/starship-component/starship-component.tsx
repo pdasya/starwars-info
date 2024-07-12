@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { IStarship } from "../../API/apiTypes";
-import styles from "./starships-component.module.css";
+import styles from "./starship-component.module.css";
 
 interface StarshipsSectionProps {
   starships: IStarship[];

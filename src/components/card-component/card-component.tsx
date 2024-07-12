@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { Character } from "../../API/apiTypes";
+import { ICharacter } from "../../API/apiTypes";
 import styles from "./card-component.module.css";
 
 interface CardProps {
-  character: Character;
+  character: ICharacter;
   onClick: () => void;
 }
 

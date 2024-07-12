@@ -1,11 +1,11 @@
 import { FC } from "react";
 import styles from "./results-component.module.css";
-import { Character } from "../../API/apiTypes";
+import { ICharacter } from "../../API/apiTypes";
 import Card from "../card-component/card-component";
 
 interface ResultsProps {
-  results: Character[];
-  onItemClick: (character: Character) => void;
+  results: ICharacter[];
+  onItemClick: (character: ICharacter) => void;
 }
 
 const Result: FC<ResultsProps> = ({ results, onItemClick }) => {

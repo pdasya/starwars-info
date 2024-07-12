@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import { fetchCharacters } from "../../API/fetchResults";
 import styles from "./main-page.module.css";
-import { Character } from "../../API/apiTypes";
+import { ICharacter } from "../../API/apiTypes";
 import useSearchTerm from "../../hooks/useSearchTerm";
 import { useSearchParams } from "react-router-dom";
 import DetailsSection from "../../modules/details-module/details-module";
@@ -9,14 +9,14 @@ import SearchSection from "../../modules/search-module/search-module";
 
 const Main: FC = () => {
   const [searchTerm, setSearchTerm] = useSearchTerm("searchString", "");
-  const [searchResults, setSearchResults] = useState<Character[]>([]);
+  const [searchResults, setSearchResults] = useState<ICharacter[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState<number>(
     Number(localStorage.getItem("currentPage")) || 1,
   );
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
+  const [selectedCharacter, setSelectedCharacter] = useState<ICharacter | null>(
     null,
   );
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -52,7 +52,7 @@ const Main: FC = () => {
     }
   };
 
-  const fetchCharacterDetails = async (character: Character) => {
+  const fetchCharacterDetails = async (character: ICharacter) => {
     setIsLoading(true);
     try {
       const response = await fetch(character.url);
@@ -107,7 +107,7 @@ const Main: FC = () => {
     localStorage.setItem("currentPage", currentPage.toString());
   }, [currentPage]);
 
-  const handleItemClick = (character: Character) => {
+  const handleItemClick = (character: ICharacter) => {
     setSearchParams(
       {
         search: searchTerm,

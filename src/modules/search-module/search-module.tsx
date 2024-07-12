@@ -1,5 +1,5 @@
 import { ChangeEvent, FC } from "react";
-import { Character } from "../../API/apiTypes";
+import { ICharacter } from "../../API/apiTypes";
 import Search from "../../components/search-component/search-component";
 import Result from "../../components/results-component/results-component";
 import Pagination from "../../components/pagination-component/pagination-component";
@@ -7,13 +7,13 @@ import styles from "./search-module.module.css";
 
 interface SearchSectionProps {
   searchTerm: string;
-  searchResults: Character[];
+  searchResults: ICharacter[];
   currentPage: number;
   totalPages: number;
   isLoading: boolean;
   onSearch: (term: string, page: number) => void;
   onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onItemClick: (character: Character) => void;
+  onItemClick: (character: ICharacter) => void;
   onPageChange: (page: number) => void;
 }
 
