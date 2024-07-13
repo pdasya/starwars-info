@@ -1,13 +1,13 @@
-import { ApiResponse, Planet, Starship, Vehicle } from "./apiTypes";
+import { IApiResponse, IPlanet, IStarship, IVehicle } from "./apiTypes";
 
 export const fetchCharacters = async (
   searchItem: string,
   page: number,
-): Promise<ApiResponse> => {
+): Promise<IApiResponse> => {
   try {
     const API_URL = `https://swapi.dev/api/people/?search=${searchItem}&page=${page}`;
     const response = await fetch(API_URL);
-    const data: ApiResponse = await response.json();
+    const data: IApiResponse = await response.json();
     return data;
   } catch (error) {
     console.error("Error fetching characters:", error);
@@ -15,7 +15,7 @@ export const fetchCharacters = async (
   }
 };
 
-export const fetchStarships = async (urls: string[]): Promise<Starship[]> => {
+export const fetchStarships = async (urls: string[]): Promise<IStarship[]> => {
   try {
     const starshipPromises = urls.map((url) =>
       fetch(url).then((response) => response.json()),
@@ -28,7 +28,7 @@ export const fetchStarships = async (urls: string[]): Promise<Starship[]> => {
   }
 };
 
-export const fetchVehicles = async (urls: string[]): Promise<Vehicle[]> => {
+export const fetchVehicles = async (urls: string[]): Promise<IVehicle[]> => {
   try {
     const vehiclePromises = urls.map((url) =>
       fetch(url).then((response) => response.json()),
@@ -41,7 +41,7 @@ export const fetchVehicles = async (urls: string[]): Promise<Vehicle[]> => {
   }
 };
 
-export const fetchPlanet = async (url: string): Promise<Planet> => {
+export const fetchPlanet = async (url: string): Promise<IPlanet> => {
   try {
     const response = await fetch(url);
     const planetData = await response.json();

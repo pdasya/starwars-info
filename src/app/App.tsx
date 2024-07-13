@@ -1,13 +1,13 @@
 import "./App.css";
-import Main from "./views/main/main-page";
-import ErrorBoundary from "./components/error-boundary-component/error-boundary-component";
+import Main from "../views/main/main-page";
+import ErrorBoundary from "../components/error-boundary-component/error-boundary-component";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   Navigate,
 } from "react-router-dom";
-import ErrorPage from "./views/error-page/error-page";
+import ErrorPage from "../views/error-page/error-page";
 
 const App: React.FC = () => {
   return (

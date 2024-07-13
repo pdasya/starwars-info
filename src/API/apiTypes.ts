@@ -18,10 +18,10 @@ export interface ICharacter {
 }
 
 export interface IApiResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: ICharacter[];
+  count?: number;
+  next?: string | null;
+  previous?: string | null;
+  results?: ICharacter[];
 }
 
 export interface IStarship {
@@ -81,4 +81,9 @@ export interface IPlanet {
   created?: string;
   edited?: string;
   url?: string;
+}
+
+export interface IFetchResponse<T> extends Response {
+  json: () => Promise<T>;
+  ok: boolean;
 }
