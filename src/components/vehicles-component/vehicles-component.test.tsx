@@ -19,6 +19,8 @@ describe("Vehicles Component", () => {
     render(<Vehicles vehicles={mockVehicles} isLoading={false} />);
     expect(screen.getByText("Speeder bike")).toBeInTheDocument();
     expect(screen.getByText("AT-AT")).toBeInTheDocument();
+    expect(screen.getByText("Sail barge")).toBeInTheDocument();
+    expect(screen.getByText("AT-ST")).toBeInTheDocument();
   });
 
   it("displays a message when not loading and no vehicle data is available", () => {

@@ -10,18 +10,18 @@ export interface ICharacter {
   homeworld?: string;
   films?: string[];
   species?: string[];
-  vehicles?: string[];
-  starships?: string[];
+  vehicles: string[];
+  starships: string[];
   created?: string;
   edited?: string;
-  url?: string;
+  url: string;
 }
 
 export interface IApiResponse {
-  count?: number;
+  count: number;
   next?: string | null;
   previous?: string | null;
-  results?: ICharacter[];
+  results: ICharacter[];
 }
 
 export interface IStarship {
@@ -67,7 +67,7 @@ export interface IVehicle {
 }
 
 export interface IPlanet {
-  name?: string;
+  name: string;
   rotation_period?: string;
   orbital_period?: string;
   diameter?: string;
