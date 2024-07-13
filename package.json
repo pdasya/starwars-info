@@ -11,7 +11,7 @@
     "ci:format": "prettier --check .",
     "prepare": "husky",
     "pre-commit": "lint-staged",
-    "pre-push": "npm run test",
+    "pre-push": "npm run vitest --coverage",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
