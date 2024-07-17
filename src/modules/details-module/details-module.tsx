@@ -1,4 +1,4 @@
-import { FC, RefObject, useEffect, useState } from "react";
+import { FC, RefObject, useContext, useEffect, useState } from "react";
 import { ICharacter, IPlanet, IStarship, IVehicle } from "../../API/apiTypes";
 import Details from "../../components/details-component/details-component";
 import styles from "./details-module.module.css";
@@ -10,6 +10,7 @@ import {
 import Starships from "../../components/starship-component/starship-component";
 import Vehicles from "../../components/vehicles-component/vehicles-component";
 import Planet from "../../components/planet-component/planet-component";
+import { ThemeContext } from "../../contexts/themeContext";
 
 interface DetailsSectionProps {
   selectedCharacter: ICharacter | null;
@@ -26,6 +27,7 @@ const DetailsSection: FC<DetailsSectionProps> = ({
   onClose,
   isOpen,
 }) => {
+  const { darkTheme } = useContext(ThemeContext);
   const [starships, setStarships] = useState<IStarship[]>([]);
   const [starshipsLoading, setStarshipsLoading] = useState<boolean>(false);
   const [vehicles, setVehicles] = useState<IVehicle[]>([]);
@@ -94,7 +96,7 @@ const DetailsSection: FC<DetailsSectionProps> = ({
         </div>
       ) : (
         selectedCharacter && (
-          <div>
+          <div className={darkTheme ? styles.darkThemeDetailsWrapper : ""}>
             <Details details={selectedCharacter} onClose={onClose} />
             <Starships starships={starships} isLoading={starshipsLoading} />
             <Vehicles vehicles={vehicles} isLoading={vehiclesLoading} />

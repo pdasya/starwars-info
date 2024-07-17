@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ICharacter } from "../../API/apiTypes";
 import styles from "./details-component.module.css";
+import { ThemeContext } from "../../contexts/themeContext";
 
 interface DetailsProps {
   details: ICharacter;
@@ -8,9 +9,16 @@ interface DetailsProps {
 }
 
 const Details: React.FC<DetailsProps> = ({ details, onClose }) => {
+  const { darkTheme } = useContext(ThemeContext);
+
   return (
-    <div className={styles.detailsContainer}>
-      <button onClick={onClose} className={styles.closeButton}>
+    <div
+      className={`${styles.detailsContainer} ${darkTheme ? styles.darkThemeDetailsContainer : ""}`}
+    >
+      <button
+        onClick={onClose}
+        className={`${styles.closeButton}  ${darkTheme ? styles.darkThemeCloseButton : ""}`}
+      >
         Close
       </button>
       <h2 className={styles.detailsHeader}>{details.name}</h2>

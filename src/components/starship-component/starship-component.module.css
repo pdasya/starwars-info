@@ -5,6 +5,10 @@
   text-transform: lowercase;
 }
 
+.darkThemeStarshipsSection {
+  color: white;
+}
+
 .starshipsHeader {
   text-decoration: underline;
 }

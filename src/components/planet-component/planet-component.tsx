@@ -1,6 +1,7 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { IPlanet } from "../../API/apiTypes";
 import styles from "./planet-component.module.css";
+import { ThemeContext } from "../../contexts/themeContext";
 
 interface PlanetSectionProps {
   planet: IPlanet | null;
@@ -8,8 +9,12 @@ interface PlanetSectionProps {
 }
 
 const Planet: FC<PlanetSectionProps> = ({ planet, isLoading }) => {
+  const { darkTheme } = useContext(ThemeContext);
+
   return (
-    <div className={styles.planetSection}>
+    <div
+      className={`${styles.planetSection} ${darkTheme ? styles.darkThemePlanetSection : ""}`}
+    >
       <h2 className={styles.planetHeader}>Homeworld</h2>
       {isLoading ? (
         <div>Loading planet...</div>

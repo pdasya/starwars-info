@@ -5,10 +5,10 @@
 }
 
 .paginationButton {
-  background-color: #000;
+  background-color: black;
   border-radius: 5px;
-  color: #f0f0f0;
-  border: 1px solid #f0f0f0;
+  color: white;
+  border: 1px solid white;
   margin: 0 5px;
   padding: 15px 20px;
   font-family: "Starjedi";
@@ -21,9 +21,21 @@
     transform 0.3s;
 }
 
+.darkThemePaginationButton {
+  color: black;
+  background-color: white;
+  border: 1px solid black;
+}
+
 .paginationButton:not(:disabled):hover {
-  background-color: #f0f0f0;
-  color: #000;
+  background-color: white;
+  color: black;
+  transform: scale(1.1);
+}
+
+.darkThemePaginationButton:not(:disabled):hover {
+  background-color: rgb(0, 0, 0, 0.6);
+  color: white;
   transform: scale(1.1);
 }
 

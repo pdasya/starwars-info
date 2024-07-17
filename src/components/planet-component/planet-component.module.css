@@ -5,6 +5,10 @@
   text-transform: lowercase;
 }
 
+.darkThemePlanetSection {
+  color: white;
+}
+
 .planetHeader {
   text-decoration: underline;
 }

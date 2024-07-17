@@ -1,5 +1,6 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import styles from "./pagination-component.module.css";
+import { ThemeContext } from "../../contexts/themeContext";
 
 interface PaginationProps {
   currentPage: number;
@@ -12,6 +13,8 @@ const Pagination: FC<PaginationProps> = ({
   totalPages,
   onPageChange,
 }) => {
+  const { darkTheme } = useContext(ThemeContext);
+
   const pages = [];
   for (let i = 1; i <= totalPages; i += 1) {
     pages.push(i);
@@ -24,7 +27,7 @@ const Pagination: FC<PaginationProps> = ({
           key={page}
           onClick={() => onPageChange(page)}
           disabled={page === currentPage}
-          className={`${styles.paginationButton} ${page === currentPage ? styles.active : ""}`}
+          className={`${styles.paginationButton} ${darkTheme ? styles.darkThemePaginationButton : ""}${page === currentPage ? styles.active : ""}`}
         >
           {page}
         </button>

@@ -1,6 +1,7 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { IVehicle } from "../../API/apiTypes";
 import styles from "./vehicles-component.module.css";
+import { ThemeContext } from "../../contexts/themeContext";
 
 interface VehiclesSectionProps {
   vehicles: IVehicle[];
@@ -8,8 +9,12 @@ interface VehiclesSectionProps {
 }
 
 const Vehicles: FC<VehiclesSectionProps> = ({ vehicles, isLoading }) => {
+  const { darkTheme } = useContext(ThemeContext);
+
   return (
-    <div className={styles.vehiclesSection}>
+    <div
+      className={`${styles.vehiclesSection} ${darkTheme ? styles.darkThemeVehiclesSection : ""}`}
+    >
       <h2 className={styles.vehicleHeader}>Vehicles</h2>
       {isLoading ? (
         <div>Loading vehicles...</div>

@@ -1,6 +1,7 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { IStarship } from "../../API/apiTypes";
 import styles from "./starship-component.module.css";
+import { ThemeContext } from "../../contexts/themeContext";
 
 interface StarshipsSectionProps {
   starships: IStarship[];
@@ -8,8 +9,12 @@ interface StarshipsSectionProps {
 }
 
 const Starships: FC<StarshipsSectionProps> = ({ starships, isLoading }) => {
+  const { darkTheme } = useContext(ThemeContext);
+
   return (
-    <div className={styles.starshipsSection}>
+    <div
+      className={`${styles.starshipsSection} ${darkTheme ? styles.darkThemeStarshipsSection : ""}`}
+    >
       <h2 className={styles.starshipsHeader}>Starships</h2>
       {isLoading ? (
         <div>Loading starships...</div>
