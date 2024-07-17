@@ -1,6 +1,7 @@
 import { ChangeEvent, KeyboardEvent, FC, useContext } from "react";
 import styles from "./search-component.module.css";
 import { ThemeContext } from "../../contexts/themeContext";
+import Toggle from "../theme-toggle-component/theme-toggle-component";
 
 interface SearchProps {
   searchTerm: string;
@@ -9,7 +10,7 @@ interface SearchProps {
 }
 
 const Search: FC<SearchProps> = ({ searchTerm, onInputChange, onSearch }) => {
-  const { darkTheme, setDarkTheme } = useContext(ThemeContext);
+  const { darkTheme } = useContext(ThemeContext);
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       onSearch();
@@ -20,17 +21,17 @@ const Search: FC<SearchProps> = ({ searchTerm, onInputChange, onSearch }) => {
     onSearch();
   };
 
-  const toggleTheme = () => {
-    if (setDarkTheme) {
-      setDarkTheme((prevTheme) => !prevTheme);
-    }
-  };
+  // const toggleTheme = () => {
+  //   if (setDarkTheme) {
+  //     setDarkTheme((prevTheme) => !prevTheme);
+  //   }
+  // };
 
   return (
     <div
       className={`${styles.searchWrapper} ${darkTheme ? styles.darkThemeSearchWrapper : ""}`}
     >
-      <button onClick={toggleTheme}>lalala</button>
+      <Toggle />
       <h1
         className={`${styles.searchHeader} ${darkTheme ? styles.darkThemeSearchHeader : ""}`}
       >
