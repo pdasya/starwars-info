@@ -21,7 +21,9 @@ const Search: FC<SearchProps> = ({ searchTerm, onInputChange, onSearch }) => {
   };
 
   const toggleTheme = () => {
-    setDarkTheme((prevTheme) => !prevTheme);
+    if (setDarkTheme) {
+      setDarkTheme((prevTheme) => !prevTheme);
+    }
   };
 
   return (
@@ -29,7 +31,9 @@ const Search: FC<SearchProps> = ({ searchTerm, onInputChange, onSearch }) => {
       className={`${styles.searchWrapper} ${darkTheme ? styles.darkThemeSearchWrapper : ""}`}
     >
       <button onClick={toggleTheme}>lalala</button>
-      <h1 className={styles.searchHeader}>
+      <h1
+        className={`${styles.searchHeader} ${darkTheme ? styles.darkThemeSearchHeader : ""}`}
+      >
         Find info about your favourite Star Wars Character!
       </h1>
       <div className={styles.searchContainer}>
@@ -41,7 +45,10 @@ const Search: FC<SearchProps> = ({ searchTerm, onInputChange, onSearch }) => {
           onChange={onInputChange}
           onKeyPress={handleKeyPress}
         />
-        <button className={styles.searchButton} onClick={handleSubmit}>
+        <button
+          className={`${styles.searchButton} ${darkTheme ? styles.darkThemeSearchButton : ""}`}
+          onClick={handleSubmit}
+        >
           Search
         </button>
       </div>

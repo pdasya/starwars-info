@@ -1,6 +1,7 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { ICharacter } from "../../API/apiTypes";
 import styles from "./card-component.module.css";
+import { ThemeContext } from "../../contexts/themeContext";
 
 interface CardProps {
   character: ICharacter;
@@ -8,11 +9,23 @@ interface CardProps {
 }
 
 const Card: FC<CardProps> = ({ character, onClick }) => {
+  const { darkTheme } = useContext(ThemeContext);
+
   return (
-    <div className={styles.characterCard} key={character.url} onClick={onClick}>
+    <div
+      className={`${styles.characterCard} ${darkTheme ? styles.darkThemeСharacterCard : ""}`}
+      key={character.url}
+      onClick={onClick}
+    >
       <div className={styles.characterCardContent}>
-        <h2 className={styles.characterName}>{character.name.toLowerCase()}</h2>
-        <ul className={styles.characterDetails}>
+        <h2
+          className={`${styles.characterName} ${darkTheme ? styles.darkThemeCharacterName : ""}`}
+        >
+          {character.name.toLowerCase()}
+        </h2>
+        <ul
+          className={`${styles.characterDetails} ${darkTheme ? styles.darkThemeCharacterDetails : ""}`}
+        >
           <li>
             <strong>Height:</strong> {character.height} cm
           </li>
@@ -36,7 +49,9 @@ const Card: FC<CardProps> = ({ character, onClick }) => {
           </li>
         </ul>
       </div>
-      <div className={styles.characterCardOverlay}>
+      <div
+        className={`${styles.characterCardOverlay} ${darkTheme ? styles.darkThemeCharacterCardOverlay : ""}`}
+      >
         May the Force be with you
       </div>
     </div>

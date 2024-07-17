@@ -13,6 +13,11 @@
     box-shadow 1s ease;
 }
 
+.darkThemeСharacterCard {
+  background-color: #242424;
+  color: white;
+}
+
 .characterCardContent {
   padding: 16px;
   transition:
@@ -41,6 +46,11 @@
   font-family: "Starjedi";
 }
 
+.darkThemeCharacterCardOverlay {
+  background: rgba(255, 255, 255, 0.8);
+  color: black;
+}
+
 .characterCard:hover .characterCardContent {
   transform: scale(0.9);
   opacity: 0.5;
@@ -59,6 +69,10 @@
   letter-spacing: 2px;
 }
 
+.darkThemeCharacterName {
+  color: white;
+}
+
 .characterDetails {
   list-style: none;
   padding: 0;
@@ -72,4 +86,8 @@
 
 .characterDetails strong {
   color: #555;
+}
+
+.darkThemeCharacterDetails strong {
+  color: white;
 }
