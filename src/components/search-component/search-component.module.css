@@ -11,6 +11,10 @@
   padding: 30px 0;
 }
 
+.darkThemeSearchWrapper {
+  background-image: none;
+}
+
 .searchContainer {
   position: relative;
   width: 600px;

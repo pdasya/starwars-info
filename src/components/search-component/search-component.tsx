@@ -1,5 +1,6 @@
-import { ChangeEvent, KeyboardEvent, FC } from "react";
+import { ChangeEvent, KeyboardEvent, FC, useContext } from "react";
 import styles from "./search-component.module.css";
+import { ThemeContext } from "../../contexts/themeContext";
 
 interface SearchProps {
   searchTerm: string;
@@ -8,6 +9,7 @@ interface SearchProps {
 }
 
 const Search: FC<SearchProps> = ({ searchTerm, onInputChange, onSearch }) => {
+  const { darkTheme, setDarkTheme } = useContext(ThemeContext);
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       onSearch();
@@ -18,8 +20,15 @@ const Search: FC<SearchProps> = ({ searchTerm, onInputChange, onSearch }) => {
     onSearch();
   };
 
+  const toggleTheme = () => {
+    setDarkTheme((prevTheme) => !prevTheme);
+  };
+
   return (
-    <div className={styles.searchWrapper}>
+    <div
+      className={`${styles.searchWrapper} ${darkTheme ? styles.darkThemeSearchWrapper : ""}`}
+    >
+      <button onClick={toggleTheme}>lalala</button>
       <h1 className={styles.searchHeader}>
         Find info about your favourite Star Wars Character!
       </h1>
