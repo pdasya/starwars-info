@@ -2,6 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Item {
   id: string;
+  name?: string;
+  height?: string;
+  mass?: string;
+  gender?: string;
 }
 
 export interface SelectedItemsState {
@@ -24,9 +28,13 @@ const selectedItemsSlice = createSlice({
         (item) => item.id !== action.payload,
       );
     },
+    unselectAllItems: (state) => {
+      state.selectedItems = [];
+    },
   },
 });
 
-export const { selectItem, unselectItem } = selectedItemsSlice.actions;
+export const { selectItem, unselectItem, unselectAllItems } =
+  selectedItemsSlice.actions;
 
 export default selectedItemsSlice.reducer;

@@ -2,6 +2,7 @@ import { FC } from "react";
 import styles from "./card-list-component.module.css";
 import { ICharacter } from "../../API/apiTypes";
 import Card from "../card-component/card-component";
+import Flyout from "../flyout-component/flyout-component";
 
 interface CardListProps {
   results: ICharacter[];
@@ -21,6 +22,7 @@ const CardList: FC<CardListProps> = ({ results, onItemClick }) => {
           onClick={() => onItemClick(character)}
         />
       ))}
+      <Flyout />
     </div>
   );
 };

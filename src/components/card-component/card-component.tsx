@@ -23,7 +23,13 @@ const Card: FC<CardProps> = ({ character, onClick }) => {
   );
 
   const handleCheckboxChange = () => {
-    const item: Item = { id: character.url };
+    const item: Item = {
+      id: character.url,
+      name: character.name,
+      height: character.height,
+      mass: character.mass,
+      gender: character.gender,
+    };
     if (selectedItems.some((selectedItem) => selectedItem.id === item.id)) {
       dispatch(unselectItem(item.id));
     } else {
@@ -70,11 +76,13 @@ const Card: FC<CardProps> = ({ character, onClick }) => {
         </ul>
       </div>
       <input
+        className={styles.characterCheckbox}
         type="checkbox"
         checked={selectedItems.some(
           (selectedItem) => selectedItem.id === character.url,
         )}
         onChange={handleCheckboxChange}
+        onClick={(event: React.MouseEvent) => event.stopPropagation()}
       ></input>
     </div>
   );
