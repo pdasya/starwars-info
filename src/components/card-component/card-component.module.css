@@ -19,7 +19,6 @@
 }
 
 .characterCardContent {
-  padding: 16px;
   transition:
     transform 1s ease,
     opacity 1s ease;

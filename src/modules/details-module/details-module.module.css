@@ -10,6 +10,12 @@
   transition: right 3s ease;
 }
 
+@media screen and (max-width: 900px) {
+  .detailsSection {
+    width: 300px;
+  }
+}
+
 .detailsSection.open {
   right: 0;
 }
