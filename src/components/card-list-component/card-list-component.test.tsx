@@ -1,8 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-// import Card from '../card-component/card-component';
-import Result from "./results-component";
+import CardList from "./card-list-component";
 import { ICharacter } from "../../API/apiTypes";
 
 interface IMockProps {
@@ -28,12 +27,12 @@ describe("Result Component", () => {
   ];
 
   it("displays no results message when there are no results", () => {
-    render(<Result results={[]} onItemClick={vi.fn()} />);
+    render(<CardList results={[]} onItemClick={vi.fn()} />);
     expect(screen.getByText("No results found.")).toBeInTheDocument();
   });
 
   it("renders cards for each result when results are present", () => {
-    render(<Result results={mockCharacters} onItemClick={vi.fn()} />);
+    render(<CardList results={mockCharacters} onItemClick={vi.fn()} />);
     const cards = screen.getAllByTestId("mock-card");
     expect(cards.length).toBe(2);
     expect(cards[0]).toHaveTextContent("Luke Skywalker");
@@ -42,7 +41,7 @@ describe("Result Component", () => {
 
   it("calls onItemClick when a card is clicked", async () => {
     const onItemClick = vi.fn();
-    render(<Result results={mockCharacters} onItemClick={onItemClick} />);
+    render(<CardList results={mockCharacters} onItemClick={onItemClick} />);
 
     const firstCard = screen.getAllByTestId("mock-card")[0];
     await userEvent.click(firstCard);

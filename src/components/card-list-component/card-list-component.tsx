@@ -1,14 +1,14 @@
 import { FC } from "react";
-import styles from "./results-component.module.css";
+import styles from "./card-list-component.module.css";
 import { ICharacter } from "../../API/apiTypes";
 import Card from "../card-component/card-component";
 
-interface ResultsProps {
+interface CardListProps {
   results: ICharacter[];
   onItemClick: (character: ICharacter) => void;
 }
 
-const Result: FC<ResultsProps> = ({ results, onItemClick }) => {
+const CardList: FC<CardListProps> = ({ results, onItemClick }) => {
   if (!results || results.length === 0) {
     return <div className={styles.resultsWrapper}>No results found.</div>;
   }
@@ -25,4 +25,4 @@ const Result: FC<ResultsProps> = ({ results, onItemClick }) => {
   );
 };
 
-export default Result;
+export default CardList;

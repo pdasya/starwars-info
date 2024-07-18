@@ -1,7 +1,7 @@
 import { ChangeEvent, FC } from "react";
 import { ICharacter } from "../../API/apiTypes";
 import Search from "../../components/search-component/search-component";
-import Result from "../../components/results-component/results-component";
+import Result from "../../components/card-list-component/card-list-component";
 import Pagination from "../../components/pagination-component/pagination-component";
 import styles from "./search-module.module.css";
 

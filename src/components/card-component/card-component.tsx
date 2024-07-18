@@ -2,6 +2,12 @@ import { FC, useContext } from "react";
 import { ICharacter } from "../../API/apiTypes";
 import styles from "./card-component.module.css";
 import { ThemeContext } from "../../contexts/themeContext";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectItem,
+  unselectItem,
+  Item,
+} from "../../features/selectedItemsSlice";
 
 interface CardProps {
   character: ICharacter;
@@ -10,6 +16,20 @@ interface CardProps {
 
 const Card: FC<CardProps> = ({ character, onClick }) => {
   const { darkTheme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
+  const selectedItems = useSelector(
+    (state: { selectedItems: { selectedItems: Item[] } }) =>
+      state.selectedItems.selectedItems,
+  );
+
+  const handleCheckboxChange = () => {
+    const item: Item = { id: character.url };
+    if (selectedItems.some((selectedItem) => selectedItem.id === item.id)) {
+      dispatch(unselectItem(item.id));
+    } else {
+      dispatch(selectItem(item));
+    }
+  };
 
   return (
     <div
@@ -49,11 +69,13 @@ const Card: FC<CardProps> = ({ character, onClick }) => {
           </li>
         </ul>
       </div>
-      <div
-        className={`${styles.characterCardOverlay} ${darkTheme ? styles.darkThemeCharacterCardOverlay : ""}`}
-      >
-        May the Force be with you
-      </div>
+      <input
+        type="checkbox"
+        checked={selectedItems.some(
+          (selectedItem) => selectedItem.id === character.url,
+        )}
+        onChange={handleCheckboxChange}
+      ></input>
     </div>
   );
 };
