@@ -21,12 +21,6 @@ const Search: FC<SearchProps> = ({ searchTerm, onInputChange, onSearch }) => {
     onSearch();
   };
 
-  // const toggleTheme = () => {
-  //   if (setDarkTheme) {
-  //     setDarkTheme((prevTheme) => !prevTheme);
-  //   }
-  // };
-
   return (
     <div
       className={`${styles.searchWrapper} ${darkTheme ? styles.darkThemeSearchWrapper : ""}`}
