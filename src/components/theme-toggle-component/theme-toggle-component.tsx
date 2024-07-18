@@ -14,7 +14,7 @@ const Toggle: FC = () => {
   return (
     <div className={styles.toggleWrapper}>
       <input
-        className={styles.switchInput}
+        className={styles.toggleInput}
         type="checkbox"
         id="toggle"
         role="switch"
@@ -22,7 +22,7 @@ const Toggle: FC = () => {
         checked={darkTheme}
         onChange={toggleTheme}
       />
-      <label htmlFor="toggle"></label>
+      <label htmlFor="toggle" className={styles.toggleLabel}></label>
     </div>
   );
 };

@@ -11,21 +11,21 @@
   justify-content: flex-end;
 }
 
-input[type="checkbox"] {
+.toggleInput[type="checkbox"] {
   visibility: hidden;
 }
 
-input[type="checkbox"]:checked + label {
+.toggleInput[type="checkbox"]:checked + .toggleLabel {
   transform: rotate(360deg);
   background-color: transparent;
 }
 
-input[type="checkbox"]:checked + label:before {
+.toggleInput[type="checkbox"]:checked + .toggleLabel:before {
   transform: translateX(35px);
   background-color: #fff;
 }
 
-label {
+.toggleLabel {
   display: flex;
   width: 80px;
   height: 35px;
@@ -37,7 +37,7 @@ label {
   cursor: pointer;
 }
 
-label:before {
+.toggleLabel:before {
   transition: transform 0.75s ease;
   transition-delay: 0.5s;
   content: "";
