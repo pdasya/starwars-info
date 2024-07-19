@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import ErrorPage from "../../views/error-page/error-page";
 import Main from "../../views/main/main-page";

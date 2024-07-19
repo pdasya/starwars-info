@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FC, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ICharacter } from "../../API/apiTypes";
 import { useFetchCharactersQuery } from "../../features/apiSlice";
@@ -27,23 +27,20 @@ const Main: FC = () => {
     1;
   const characterQuery = searchParams.get("character") || "";
 
-  const { data, error, isLoading, refetch } = useFetchCharactersQuery({
+  const { data, error, isLoading } = useFetchCharactersQuery({
     searchItem: searchTerm,
     page: currentPage,
   });
 
-  const searchResults = data?.results || [];
-  const totalPages = Math.ceil((data?.count || 0) / 10);
+  const searchResults = useMemo(() => data?.results || [], [data]);
+  const totalPages = useMemo(() => Math.ceil((data?.count || 0) / 10), [data]);
 
   useEffect(() => {
     setCurrentPage(pageQuery);
     if (searchQuery) {
       setSearchTerm(searchQuery);
-      refetch();
-    } else {
-      refetch();
     }
-  }, [searchQuery, pageQuery, refetch]);
+  }, [searchQuery, pageQuery]);
 
   useEffect(() => {
     if (characterQuery) {
@@ -76,7 +73,6 @@ const Main: FC = () => {
     );
     setCurrentPage(page);
     localStorage.setItem("currentPage", page.toString());
-    refetch();
   };
 
   const handleItemClick = (character: ICharacter) => {
@@ -119,7 +115,7 @@ const Main: FC = () => {
           currentPage={currentPage}
           totalPages={totalPages}
           isLoading={isLoading}
-          onSearch={() => refetch()}
+          onSearch={() => {}}
           onInputChange={handleInputChange}
           onItemClick={handleItemClick}
           onPageChange={handlePageChange}

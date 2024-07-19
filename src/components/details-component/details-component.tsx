@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
+import * as React from "react";
 import { ICharacter } from "../../API/apiTypes";
 import styles from "./details-component.module.css";
 import { ThemeContext } from "../../contexts/themeContext";
