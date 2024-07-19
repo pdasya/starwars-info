@@ -27,7 +27,7 @@ const Main: FC = () => {
     1;
   const characterQuery = searchParams.get("character") || "";
 
-  const { data, error, isLoading } = useFetchCharactersQuery({
+  const { data, error, isFetching } = useFetchCharactersQuery({
     searchItem: searchTerm,
     page: currentPage,
   });
@@ -114,7 +114,7 @@ const Main: FC = () => {
           searchResults={searchResults}
           currentPage={currentPage}
           totalPages={totalPages}
-          isLoading={isLoading}
+          isLoading={isFetching}
           onSearch={() => {}}
           onInputChange={handleInputChange}
           onItemClick={handleItemClick}
@@ -124,7 +124,7 @@ const Main: FC = () => {
       {selectedCharacter && (
         <DetailsSection
           selectedCharacter={selectedCharacter}
-          isDetailLoading={isLoading}
+          isDetailLoading={isFetching}
           detailsRef={detailsRef}
           onClose={handleItemClose}
           isOpen={!!selectedCharacter}
