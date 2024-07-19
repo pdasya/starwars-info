@@ -1,16 +1,16 @@
-import { FC, RefObject, useContext, useEffect, useState } from "react";
-import { ICharacter, IPlanet, IStarship, IVehicle } from "../../API/apiTypes";
+import { FC, RefObject, useContext } from "react";
+import { ICharacter } from "../../API/apiTypes";
 import Details from "../../components/details-component/details-component";
 import styles from "./details-module.module.css";
-import {
-  fetchStarships,
-  fetchVehicles,
-  fetchPlanet,
-} from "../../API/fetchResults";
 import Starships from "../../components/starship-component/starship-component";
 import Vehicles from "../../components/vehicles-component/vehicles-component";
 import Planet from "../../components/planet-component/planet-component";
 import { ThemeContext } from "../../contexts/themeContext";
+import {
+  useFetchPlanetQuery,
+  useFetchStarshipsQuery,
+  useFetchVehiclesQuery,
+} from "../../features/apiSlice";
 
 interface DetailsSectionProps {
   selectedCharacter: ICharacter | null;
@@ -28,60 +28,22 @@ const DetailsSection: FC<DetailsSectionProps> = ({
   isOpen,
 }) => {
   const { darkTheme } = useContext(ThemeContext);
-  const [starships, setStarships] = useState<IStarship[]>([]);
-  const [starshipsLoading, setStarshipsLoading] = useState<boolean>(false);
-  const [vehicles, setVehicles] = useState<IVehicle[]>([]);
-  const [vehiclesLoading, setVehiclesLoading] = useState<boolean>(false);
-  const [planet, setPlanet] = useState<IPlanet | null>(null);
-  const [planetLoading, setPlanetLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchAllData = async () => {
-      if (selectedCharacter) {
-        if (selectedCharacter.starships.length > 0) {
-          setStarshipsLoading(true);
-          try {
-            const starshipResults = await fetchStarships(
-              selectedCharacter.starships,
-            );
-            setStarships(starshipResults);
-          } catch (error) {
-            console.error("Error fetching starships:", error);
-          } finally {
-            setStarshipsLoading(false);
-          }
-        }
+  const { data: starships, isLoading: starshipsLoading } =
+    useFetchStarshipsQuery(
+      selectedCharacter ? selectedCharacter.starships : [],
+      { skip: !selectedCharacter || selectedCharacter.starships.length === 0 },
+    );
 
-        if (selectedCharacter.vehicles.length > 0) {
-          setVehiclesLoading(true);
-          try {
-            const vehicleResults = await fetchVehicles(
-              selectedCharacter.vehicles,
-            );
-            setVehicles(vehicleResults);
-          } catch (error) {
-            console.error("Error fetching vehicles:", error);
-          } finally {
-            setVehiclesLoading(false);
-          }
-        }
+  const { data: vehicles, isLoading: vehiclesLoading } = useFetchVehiclesQuery(
+    selectedCharacter ? selectedCharacter.vehicles : [],
+    { skip: !selectedCharacter || selectedCharacter.vehicles.length === 0 },
+  );
 
-        if (selectedCharacter.homeworld) {
-          setPlanetLoading(true);
-          try {
-            const planetData = await fetchPlanet(selectedCharacter.homeworld);
-            setPlanet(planetData);
-          } catch (error) {
-            console.error("Error fetching planet:", error);
-          } finally {
-            setPlanetLoading(false);
-          }
-        }
-      }
-    };
-
-    fetchAllData();
-  }, [selectedCharacter]);
+  const { data: planet, isLoading: planetLoading } = useFetchPlanetQuery(
+    selectedCharacter?.homeworld ?? "",
+    { skip: !selectedCharacter || !selectedCharacter.homeworld },
+  );
 
   return (
     <div
@@ -98,9 +60,12 @@ const DetailsSection: FC<DetailsSectionProps> = ({
         selectedCharacter && (
           <div className={darkTheme ? styles.darkThemeDetailsWrapper : ""}>
             <Details details={selectedCharacter} onClose={onClose} />
-            <Starships starships={starships} isLoading={starshipsLoading} />
-            <Vehicles vehicles={vehicles} isLoading={vehiclesLoading} />
-            <Planet planet={planet} isLoading={planetLoading} />
+            <Starships
+              starships={starships || []}
+              isLoading={starshipsLoading}
+            />
+            <Vehicles vehicles={vehicles || []} isLoading={vehiclesLoading} />
+            <Planet planet={planet || null} isLoading={planetLoading} />
           </div>
         )
       )}

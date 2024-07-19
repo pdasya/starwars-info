@@ -1,21 +1,18 @@
 import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
-import { fetchCharacters } from "../../API/fetchResults";
-import styles from "./main-page.module.css";
-import { ICharacter } from "../../API/apiTypes";
-import useSearchTerm from "../../hooks/useSearchTerm";
 import { useSearchParams } from "react-router-dom";
+import { ICharacter } from "../../API/apiTypes";
+import { useFetchCharactersQuery } from "../../features/apiSlice";
 import DetailsSection from "../../modules/details-module/details-module";
 import SearchSection from "../../modules/search-module/search-module";
+import useSearchTerm from "../../hooks/useSearchTerm";
+import styles from "./main-page.module.css";
 
 const Main: FC = () => {
   const [searchTerm, setSearchTerm] = useSearchTerm("searchString", "");
-  const [searchResults, setSearchResults] = useState<ICharacter[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState<number>(
     Number(localStorage.getItem("currentPage")) || 1,
   );
-  const [totalPages, setTotalPages] = useState<number>(1);
   const [selectedCharacter, setSelectedCharacter] = useState<ICharacter | null>(
     null,
   );
@@ -30,50 +27,23 @@ const Main: FC = () => {
     1;
   const characterQuery = searchParams.get("character") || "";
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value.toString();
-    setSearchTerm(value);
-    setSearchParams({ search: value, page: "1" }, { replace: false });
-  };
+  const { data, error, isLoading, refetch } = useFetchCharactersQuery({
+    searchItem: searchTerm,
+    page: currentPage,
+  });
 
-  const handleSearch = async (term: string, page: number) => {
-    const trimmedSearchTerm = term.trim();
-    localStorage.setItem("searchString", trimmedSearchTerm);
-    setIsLoading(true);
-
-    try {
-      const data = await fetchCharacters(trimmedSearchTerm, page);
-      setSearchResults(data.results);
-      setTotalPages(Math.ceil(data.count / 10));
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching characters:", error);
-      setIsLoading(false);
-    }
-  };
-
-  const fetchCharacterDetails = async (character: ICharacter) => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(character.url);
-      const data = await response.json();
-      setSelectedCharacter(data);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching character details:", error);
-      setIsLoading(false);
-    }
-  };
+  const searchResults = data?.results || [];
+  const totalPages = Math.ceil((data?.count || 0) / 10);
 
   useEffect(() => {
     setCurrentPage(pageQuery);
     if (searchQuery) {
       setSearchTerm(searchQuery);
-      handleSearch(searchQuery, pageQuery);
+      refetch();
     } else {
-      handleSearch(searchTerm, pageQuery);
+      refetch();
     }
-  }, [searchQuery, pageQuery]);
+  }, [searchQuery, pageQuery, refetch]);
 
   useEffect(() => {
     if (characterQuery) {
@@ -81,7 +51,7 @@ const Main: FC = () => {
         (char) => char.name === characterQuery,
       );
       if (character) {
-        fetchCharacterDetails(character);
+        setSelectedCharacter(character);
         setErrorMessage(null);
       } else {
         setSelectedCharacter(null);
@@ -89,6 +59,12 @@ const Main: FC = () => {
       }
     }
   }, [characterQuery, searchResults]);
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.toString();
+    setSearchTerm(value);
+    setSearchParams({ search: value, page: "1" }, { replace: false });
+  };
 
   const handlePageChange = (page: number) => {
     setSearchParams(
@@ -100,12 +76,8 @@ const Main: FC = () => {
     );
     setCurrentPage(page);
     localStorage.setItem("currentPage", page.toString());
-    handleSearch(searchTerm, page);
+    refetch();
   };
-
-  useEffect(() => {
-    localStorage.setItem("currentPage", currentPage.toString());
-  }, [currentPage]);
 
   const handleItemClick = (character: ICharacter) => {
     setSearchParams(
@@ -116,7 +88,7 @@ const Main: FC = () => {
       },
       { replace: false },
     );
-    fetchCharacterDetails(character);
+    setSelectedCharacter(character);
   };
 
   const handleItemClose = () => {
@@ -140,13 +112,14 @@ const Main: FC = () => {
     <div className={styles.mainContainer} onClick={handleContainerClick}>
       <div className={`${selectedCharacter ? styles.blockedInteractions : ""}`}>
         {errorMessage && <div className={styles.error}>{errorMessage}</div>}
+        {error && <div className={styles.error}>Error fetching data</div>}
         <SearchSection
           searchTerm={searchTerm}
           searchResults={searchResults}
           currentPage={currentPage}
           totalPages={totalPages}
           isLoading={isLoading}
-          onSearch={handleSearch}
+          onSearch={() => refetch()}
           onInputChange={handleInputChange}
           onItemClick={handleItemClick}
           onPageChange={handlePageChange}

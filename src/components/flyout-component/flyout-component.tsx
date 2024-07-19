@@ -19,8 +19,6 @@ const Flyout: FC = () => {
     dispatch(unselectAllItems());
   };
 
-  console.log(selectedItems);
-
   const handleDownload = () => {
     const filename = `${selectedItems.length}_characters.csv`;
     downloadCSV(selectedItems, filename);
