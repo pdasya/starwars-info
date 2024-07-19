@@ -1,18 +1,21 @@
 import { ChangeEvent, FC, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { ICharacter } from "../../API/apiTypes";
 import { useFetchCharactersQuery } from "../../features/apiSlice";
 import DetailsSection from "../../modules/details-module/details-module";
 import SearchSection from "../../modules/search-module/search-module";
 import useSearchTerm from "../../hooks/useSearchTerm";
+import { setCurrentPage } from "../../features/currentPageSlice";
 import styles from "./main-page.module.css";
+import { AppDispatch, RootState } from "../../app/store";
 
 const Main: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const [searchTerm, setSearchTerm] = useSearchTerm("searchString", "");
   const [searchParams, setSearchParams] = useSearchParams();
-  const [currentPage, setCurrentPage] = useState<number>(
-    Number(localStorage.getItem("currentPage")) || 1,
-  );
+
+  const currentPage = useSelector((state: RootState) => state.currentPage);
   const [selectedCharacter, setSelectedCharacter] = useState<ICharacter | null>(
     null,
   );
@@ -21,26 +24,23 @@ const Main: FC = () => {
   const detailsRef = useRef<HTMLDivElement>(null);
 
   const searchQuery = searchParams.get("search") || "";
-  const pageQuery =
-    Number(searchParams.get("page")) ||
-    Number(localStorage.getItem("currentPage")) ||
-    1;
+  const pageQuery = Number(searchParams.get("page")) || 1;
   const characterQuery = searchParams.get("character") || "";
 
   const { data, error, isFetching } = useFetchCharactersQuery({
     searchItem: searchTerm,
-    page: currentPage,
+    page: currentPage.currentPage,
   });
 
   const searchResults = useMemo(() => data?.results || [], [data]);
   const totalPages = useMemo(() => Math.ceil((data?.count || 0) / 10), [data]);
 
   useEffect(() => {
-    setCurrentPage(pageQuery);
+    dispatch(setCurrentPage(pageQuery));
     if (searchQuery) {
       setSearchTerm(searchQuery);
     }
-  }, [searchQuery, pageQuery]);
+  }, [searchQuery, pageQuery, dispatch, setSearchTerm]);
 
   useEffect(() => {
     if (characterQuery) {
@@ -71,15 +71,14 @@ const Main: FC = () => {
       },
       { replace: false },
     );
-    setCurrentPage(page);
-    localStorage.setItem("currentPage", page.toString());
+    dispatch(setCurrentPage(page));
   };
 
   const handleItemClick = (character: ICharacter) => {
     setSearchParams(
       {
         search: searchTerm,
-        page: currentPage.toString(),
+        page: currentPage.currentPage.toString(),
         character: character.name,
       },
       { replace: false },
@@ -89,7 +88,7 @@ const Main: FC = () => {
 
   const handleItemClose = () => {
     setSearchParams(
-      { search: searchTerm, page: currentPage.toString() },
+      { search: searchTerm, page: currentPage.currentPage.toString() },
       { replace: false },
     );
     setSelectedCharacter(null);
@@ -112,7 +111,7 @@ const Main: FC = () => {
         <SearchSection
           searchTerm={searchTerm}
           searchResults={searchResults}
-          currentPage={currentPage}
+          currentPage={currentPage.currentPage}
           totalPages={totalPages}
           isLoading={isFetching}
           onSearch={() => {}}
