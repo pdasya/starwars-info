@@ -1,8 +1,8 @@
 import { ChangeEvent, FC } from "react";
 import { ICharacter } from "../../API/apiTypes";
-import Search from "../../components/search-component/search-component";
-import Result from "../../components/card-list-component/card-list-component";
-import Pagination from "../../components/pagination-component/pagination-component";
+import Search from "../../components/search/search";
+import Result from "../../components/card-list/card-list";
+import Pagination from "../../components/pagination/pagination";
 import styles from "./search-module.module.css";
 
 interface SearchSectionProps {

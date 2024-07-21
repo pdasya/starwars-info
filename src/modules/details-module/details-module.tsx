@@ -1,10 +1,10 @@
 import { FC, RefObject, useContext } from "react";
 import { ICharacter } from "../../API/apiTypes";
-import Details from "../../components/details-component/details-component";
+import Details from "../../components/details/details";
 import styles from "./details-module.module.css";
-import Starships from "../../components/starship-component/starship-component";
-import Vehicles from "../../components/vehicles-component/vehicles-component";
-import Planet from "../../components/planet-component/planet-component";
+import Starships from "../../components/details/starship/starship";
+import Vehicles from "../../components/details/vehicles/vehicles";
+import Planet from "../../components/details/planet/planet";
 import { ThemeContext } from "../../contexts/themeContext";
 import {
   useFetchPlanetQuery,
