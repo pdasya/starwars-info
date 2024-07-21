@@ -1,13 +1,9 @@
 import { FC, useContext } from "react";
 import styles from "./checkbox.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectItem,
-  unselectItem,
-  Item,
-} from "../../features/selectedItemsSlice";
-import { ICharacter } from "../../API/apiTypes";
-import { ThemeContext } from "../../contexts/themeContext";
+import { selectItem, unselectItem, Item } from "@features/selectedItemsSlice";
+import { ICharacter } from "@API/apiTypes";
+import { ThemeContext } from "@contexts/themeContext";
 
 interface CheckboxProps {
   character: ICharacter;

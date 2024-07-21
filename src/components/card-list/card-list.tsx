@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styles from "./card-list.module.css";
-import { ICharacter } from "../../API/apiTypes";
+import { ICharacter } from "@API/apiTypes";
 import Card from "../card/card";
 import Flyout from "../flyout/flyout";
 

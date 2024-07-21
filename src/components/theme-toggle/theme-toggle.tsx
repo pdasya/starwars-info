@@ -1,6 +1,6 @@
 import { FC, useContext } from "react";
 import styles from "./theme-toggle.module.css";
-import { ThemeContext } from "../../contexts/themeContext";
+import { ThemeContext } from "@contexts/themeContext";
 
 const Toggle: FC = () => {
   const { darkTheme, setDarkTheme } = useContext(ThemeContext);

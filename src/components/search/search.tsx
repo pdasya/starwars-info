@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, FC, useContext } from "react";
 import styles from "./search.module.css";
-import { ThemeContext } from "../../contexts/themeContext";
+import { ThemeContext } from "@contexts/themeContext";
 import Toggle from "../theme-toggle/theme-toggle";
 
 interface SearchProps {

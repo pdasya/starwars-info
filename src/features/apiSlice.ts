@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IApiResponse, IPlanet, IStarship, IVehicle } from "../API/apiTypes";
+import { IApiResponse, IPlanet, IStarship, IVehicle } from "@API/apiTypes";
 
 export const api = createApi({
   reducerPath: "api",

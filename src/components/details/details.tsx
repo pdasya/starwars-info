@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import * as React from "react";
-import { ICharacter } from "../../API/apiTypes";
+import { ICharacter } from "@API/apiTypes";
 import styles from "./details.module.css";
-import { ThemeContext } from "../../contexts/themeContext";
+import { ThemeContext } from "@contexts/themeContext";
 
 interface DetailsProps {
   details: ICharacter;

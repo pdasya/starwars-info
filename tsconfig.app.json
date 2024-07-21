@@ -8,6 +8,19 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "types": ["vitest/globals", "@testing-library/jest-dom"],
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@API/*": ["src/API/*"],
+      "@views/*": ["src/views/*"],
+      "@modules/*": ["src/modules/*"],
+      "@components/*": ["src/components/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@utils/*": ["src/utils/*"],
+      "@features/*": ["src/features/*"],
+      "@contexts/*": ["src/contexts/*"],
+      "@/*": ["src/*"]
+    },
 
     /* Bundler mode */
     "moduleResolution": "Node",

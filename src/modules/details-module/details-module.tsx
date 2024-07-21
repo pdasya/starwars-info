@@ -1,16 +1,16 @@
 import { FC, RefObject, useContext } from "react";
-import { ICharacter } from "../../API/apiTypes";
-import Details from "../../components/details/details";
+import { ICharacter } from "@API/apiTypes";
+import Details from "@components/details/details";
 import styles from "./details-module.module.css";
-import Starships from "../../components/starship/starship";
-import Vehicles from "../../components/vehicles/vehicles";
-import Planet from "../../components/planet/planet";
-import { ThemeContext } from "../../contexts/themeContext";
+import Starships from "@components/starship/starship";
+import Vehicles from "@components/vehicles/vehicles";
+import Planet from "@components/planet/planet";
+import { ThemeContext } from "@contexts/themeContext";
 import {
   useFetchPlanetQuery,
   useFetchStarshipsQuery,
   useFetchVehiclesQuery,
-} from "../../features/apiSlice";
+} from "@features/apiSlice";
 
 interface DetailsSectionProps {
   selectedCharacter: ICharacter | null;

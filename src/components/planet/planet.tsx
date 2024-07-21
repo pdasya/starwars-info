@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
-import { IPlanet } from "../../API/apiTypes";
+import { IPlanet } from "@API/apiTypes";
 import styles from "./planet.module.css";
-import { ThemeContext } from "../../contexts/themeContext";
+import { ThemeContext } from "@contexts/themeContext";
 
 interface PlanetSectionProps {
   planet: IPlanet | null;

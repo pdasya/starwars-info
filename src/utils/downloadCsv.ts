@@ -1,4 +1,4 @@
-import { Item } from "../features/selectedItemsSlice";
+import { Item } from "@features/selectedItemsSlice";
 import { saveAs } from "file-saver";
 
 export const downloadCSV = (items: Item[], filename: string) => {

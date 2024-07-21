@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
-import { IStarship } from "../../API/apiTypes";
+import { IStarship } from "@API/apiTypes";
 import styles from "./starship.module.css";
-import { ThemeContext } from "../../contexts/themeContext";
+import { ThemeContext } from "@contexts/themeContext";
 
 interface StarshipsSectionProps {
   starships: IStarship[];

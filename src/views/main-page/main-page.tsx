@@ -1,14 +1,14 @@
 import { ChangeEvent, FC, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ICharacter } from "../../API/apiTypes";
-import { useFetchCharactersQuery } from "../../features/apiSlice";
-import DetailsSection from "../../modules/details-module/details-module";
-import SearchSection from "../../modules/search-module/search-module";
-import useSearchTerm from "../../hooks/useSearchTerm";
-import { setCurrentPage } from "../../features/currentPageSlice";
+import { ICharacter } from "@API/apiTypes";
+import { useFetchCharactersQuery } from "@features/apiSlice";
+import DetailsSection from "@modules/details-module/details-module";
+import SearchSection from "@modules/search-module/search-module";
+import useSearchTerm from "@hooks/useSearchTerm";
+import { setCurrentPage } from "@features/currentPageSlice";
 import styles from "./main-page.module.css";
-import { AppDispatch, RootState } from "../../app/store";
+import { AppDispatch, RootState } from "@app/store";
 
 const Main: FC = () => {
   const dispatch = useDispatch<AppDispatch>();

@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
-import { ICharacter } from "../../API/apiTypes";
+import { ICharacter } from "@API/apiTypes";
 import styles from "./card.module.css";
-import { ThemeContext } from "../../contexts/themeContext";
+import { ThemeContext } from "@contexts/themeContext";
 import Checkbox from "../checkbox/checkbox";
 
 interface CardProps {

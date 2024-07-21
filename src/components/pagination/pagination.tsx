@@ -1,6 +1,6 @@
 import { FC, useContext } from "react";
 import styles from "./pagination.module.css";
-import { ThemeContext } from "../../contexts/themeContext";
+import { ThemeContext } from "@contexts/themeContext";
 
 interface PaginationProps {
   currentPage: number;

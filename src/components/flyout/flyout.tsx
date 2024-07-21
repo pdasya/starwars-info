@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Item, unselectAllItems } from "../../features/selectedItemsSlice";
+import { Item, unselectAllItems } from "@features/selectedItemsSlice";
 import styles from "./flyout.module.css";
-import { downloadCSV } from "../../utils/downloadCsv";
+import { downloadCSV } from "@utils/downloadCsv";
 
 const Flyout: FC = () => {
   const dispatch = useDispatch();
