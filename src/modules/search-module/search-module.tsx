@@ -11,7 +11,7 @@ interface SearchSectionProps {
   currentPage: number;
   totalPages: number;
   isLoading: boolean;
-  onSearch: (term: string, page: number) => void;
+  onSearch: () => void;
   onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onItemClick: (character: ICharacter) => void;
   onPageChange: (page: number) => void;
@@ -33,7 +33,7 @@ const SearchSection: FC<SearchSectionProps> = ({
       <Search
         searchTerm={searchTerm}
         onInputChange={onInputChange}
-        onSearch={() => onSearch(searchTerm, 1)}
+        onSearch={onSearch}
       />
       {isLoading ? (
         <div className={styles.overlay}>

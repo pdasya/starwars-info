@@ -19,7 +19,6 @@ const Main: FC = () => {
   const [selectedCharacter, setSelectedCharacter] = useState<ICharacter | null>(
     null,
   );
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const detailsRef = useRef<HTMLDivElement>(null);
 
@@ -28,7 +27,7 @@ const Main: FC = () => {
   const characterQuery = searchParams.get("character") || "";
 
   const { data, error, isFetching } = useFetchCharactersQuery({
-    searchItem: searchTerm,
+    searchItem: searchQuery,
     page: currentPage.currentPage,
   });
 
@@ -49,10 +48,8 @@ const Main: FC = () => {
       );
       if (character) {
         setSelectedCharacter(character);
-        setErrorMessage(null);
       } else {
         setSelectedCharacter(null);
-        setErrorMessage(`Character "${characterQuery}" not found.`);
       }
     }
   }, [characterQuery, searchResults]);
@@ -60,7 +57,6 @@ const Main: FC = () => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.toString();
     setSearchTerm(value);
-    setSearchParams({ search: value, page: "1" }, { replace: false });
   };
 
   const handlePageChange = (page: number) => {
@@ -103,10 +99,14 @@ const Main: FC = () => {
     }
   };
 
+  const handleSearch = () => {
+    setSearchParams({ search: searchTerm, page: "1" }, { replace: false });
+    dispatch(setCurrentPage(1));
+  };
+
   return (
     <div className={styles.mainContainer} onClick={handleContainerClick}>
       <div className={`${selectedCharacter ? styles.blockedInteractions : ""}`}>
-        {errorMessage && <div className={styles.error}>{errorMessage}</div>}
         {error && <div className={styles.error}>Error fetching data</div>}
         <SearchSection
           searchTerm={searchTerm}
@@ -114,7 +114,7 @@ const Main: FC = () => {
           currentPage={currentPage.currentPage}
           totalPages={totalPages}
           isLoading={isFetching}
-          onSearch={() => {}}
+          onSearch={handleSearch}
           onInputChange={handleInputChange}
           onItemClick={handleItemClick}
           onPageChange={handlePageChange}
