@@ -26,7 +26,7 @@ const Flyout: FC = () => {
 
   return (
     <div className={styles.flyout}>
-      <span>{selectedItems.length} items are selected</span>
+      <span>{`${selectedItems.length === 1 ? `${selectedItems.length} item is selected` : `${selectedItems.length} items are selected`}`}</span>
       <button onClick={handleUnselectAll}>Unselect all</button>
       <button onClick={handleDownload}>Download</button>
     </div>
