@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
-import { IVehicle } from "../../../API/apiTypes";
+import { IVehicle } from "../../API/apiTypes";
 import styles from "./vehicles.module.css";
-import { ThemeContext } from "../../../contexts/themeContext";
+import { ThemeContext } from "../../contexts/themeContext";
 
 interface VehiclesSectionProps {
   vehicles: IVehicle[];
