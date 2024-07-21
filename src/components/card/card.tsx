@@ -2,12 +2,7 @@ import { FC, useContext } from "react";
 import { ICharacter } from "../../API/apiTypes";
 import styles from "./card.module.css";
 import { ThemeContext } from "../../contexts/themeContext";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectItem,
-  unselectItem,
-  Item,
-} from "../../features/selectedItemsSlice";
+import Checkbox from "../checkbox/checkbox";
 
 interface CardProps {
   character: ICharacter;
@@ -16,26 +11,6 @@ interface CardProps {
 
 const Card: FC<CardProps> = ({ character, onClick }) => {
   const { darkTheme } = useContext(ThemeContext);
-  const dispatch = useDispatch();
-  const selectedItems = useSelector(
-    (state: { selectedItems: { selectedItems: Item[] } }) =>
-      state.selectedItems.selectedItems,
-  );
-
-  const handleCheckboxChange = () => {
-    const item: Item = {
-      id: character.url,
-      name: character.name,
-      height: character.height,
-      mass: character.mass,
-      gender: character.gender,
-    };
-    if (selectedItems.some((selectedItem) => selectedItem.id === item.id)) {
-      dispatch(unselectItem(item.id));
-    } else {
-      dispatch(selectItem(item));
-    }
-  };
 
   return (
     <div
@@ -75,15 +50,7 @@ const Card: FC<CardProps> = ({ character, onClick }) => {
           </li>
         </ul>
       </div>
-      <input
-        className={styles.characterCheckbox}
-        type="checkbox"
-        checked={selectedItems.some(
-          (selectedItem) => selectedItem.id === character.url,
-        )}
-        onChange={handleCheckboxChange}
-        onClick={(event: React.MouseEvent) => event.stopPropagation()}
-      ></input>
+      <Checkbox character={character} />
     </div>
   );
 };
