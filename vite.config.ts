@@ -15,6 +15,15 @@ export default defineConfig({
     coverage: {
       enabled: true,
       provider: "v8",
+      include: ["src/**/*.ts", "src/**/*.tsx"],
+      exclude: [
+        "src/**/*.d.ts",
+        "src/**/index.ts",
+        "src/setupTests.ts",
+        "src/**/*.test.ts",
+        "src/**/*.test.tsx",
+        "src/API/mockData.ts",
+      ],
       reporter: ["text", "json", "html"],
     },
   },
