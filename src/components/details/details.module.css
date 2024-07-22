@@ -1,0 +1,52 @@
+.detailsContainer {
+  font-family: "Starjedi";
+  text-transform: lowercase;
+}
+
+.darkThemeDetailsContainer {
+  color: white;
+}
+
+.detailsHeader {
+  text-decoration: underline;
+}
+
+.closeButton {
+  cursor: pointer;
+  font-size: 16px;
+  letter-spacing: 2px;
+
+  color: white;
+  font-weight: 700;
+  background-color: #242424;
+  width: auto;
+  border-radius: 25px;
+  padding: 7px 9px;
+
+  font-family: "StarJedi";
+
+  transition:
+    color 1s ease-in,
+    -webkit-text-stroke 1s ease-in;
+}
+
+.closeButton:hover {
+  background-color: white;
+  -webkit-text-stroke: 1px black;
+  color: transparent;
+  letter-spacing: 2px;
+}
+
+.darkThemeCloseButton {
+  color: #242424;
+  background-color: white;
+}
+
+.darkThemeCloseButton:hover {
+  background-color: #242424;
+  color: white;
+}
+
+.characterDetails {
+  list-style: none;
+}

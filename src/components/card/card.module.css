@@ -1,0 +1,70 @@
+.characterCard {
+  width: 300px;
+  height: 400px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 1s ease,
+    box-shadow 1s ease;
+}
+
+.darkThemeСharacterCard {
+  background-color: #242424;
+  color: white;
+}
+
+.characterCardContent {
+  transition:
+    transform 1s ease,
+    opacity 1s ease;
+}
+
+.characterCard:hover .characterCardContent {
+  transform: scale(0.9);
+  opacity: 0.5;
+}
+
+.characterCard:hover .characterCardOverlay {
+  opacity: 1;
+}
+
+.characterName {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+
+  font-family: "Starjedi";
+  letter-spacing: 2px;
+}
+
+.darkThemeCharacterName {
+  color: white;
+}
+
+.characterDetails {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+  text-align: left;
+}
+
+.characterDetails li {
+  margin: 10px 0;
+}
+
+.characterDetails strong {
+  color: #555;
+}
+
+.darkThemeCharacterDetails strong {
+  color: white;
+}
+
+.characterCheckbox:hover {
+  cursor: pointer;
+}
