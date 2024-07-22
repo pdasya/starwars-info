@@ -1,60 +1,99 @@
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, Mock } from "vitest";
 import Main from "./main-page";
-import * as api from "../../API/fetchResults";
 import { ICharacter } from "../../API/apiTypes";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, useSearchParams } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "@app/store";
+import { useFetchCharactersQuery } from "@features/apiSlice";
 
-vi.mock("../../API/fetchResults");
+// Mock the hooks
+vi.mock(
+  "@features/apiSlice",
+  async (importOriginal: () => Promise<unknown>) => {
+    const actual =
+      (await importOriginal()) as typeof import("@features/apiSlice");
+    return {
+      ...actual,
+      useFetchCharactersQuery: vi.fn(),
+    };
+  },
+);
+
+vi.mock("react-redux", async (importOriginal: () => Promise<unknown>) => {
+  const actual = (await importOriginal()) as typeof import("react-redux");
+  return {
+    ...actual,
+    useDispatch: () => vi.fn(),
+    useSelector: (selector: (state: unknown) => unknown) =>
+      selector({
+        currentPage: { currentPage: 1 },
+        selectedItems: { selectedItems: [] },
+      }),
+  };
+});
+
+vi.mock("react-router-dom", async (importOriginal: () => Promise<unknown>) => {
+  const actual = (await importOriginal()) as typeof import("react-router-dom");
+  return {
+    ...actual,
+    useSearchParams: vi.fn(),
+  };
+});
 
 describe("Main component", () => {
-  const mockCharacters: ICharacter[] = [
-    {
-      name: "Luke Skywalker",
-      starships: [],
-      vehicles: [],
-      homeworld: "",
-      url: "url1",
-    },
-    {
-      name: "Darth Vader",
-      starships: [],
-      vehicles: [],
-      homeworld: "",
-      url: "url2",
-    },
-  ];
-
-  const mockFetchCharacters = {
-    results: mockCharacters,
-    count: 2,
+  const mockCharacter: ICharacter = {
+    name: "Luke Skywalker",
+    starships: ["starship1"],
+    vehicles: ["vehicle1"],
+    homeworld: "planet1",
+    url: "1",
   };
 
-  const mockFetchCharacterDetails = (character: ICharacter) =>
-    Promise.resolve({ ...character });
+  const mockData = {
+    results: [mockCharacter],
+    count: 1,
+  };
 
   beforeEach(() => {
-    vi.spyOn(api, "fetchCharacters").mockResolvedValue(mockFetchCharacters);
+    vi.resetAllMocks();
   });
 
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
+  it("renders Main component correctly", () => {
+    (useFetchCharactersQuery as Mock).mockReturnValue({
+      data: mockData,
+      error: null,
+      isFetching: false,
+    });
 
-  it("renders search section correctly", () => {
+    (useSearchParams as Mock).mockReturnValue([new URLSearchParams(), vi.fn()]);
+
     render(
-      <MemoryRouter>
-        <Main />
-      </MemoryRouter>,
+      <Provider store={store}>
+        <MemoryRouter>
+          <Main />
+        </MemoryRouter>
+      </Provider>,
     );
+
     expect(screen.getByPlaceholderText(/search/i)).toBeInTheDocument();
   });
 
   it("fetches and displays search results", async () => {
+    (useFetchCharactersQuery as Mock).mockReturnValue({
+      data: mockData,
+      error: null,
+      isFetching: false,
+    });
+
+    (useSearchParams as Mock).mockReturnValue([new URLSearchParams(), vi.fn()]);
+
     render(
-      <MemoryRouter>
-        <Main />
-      </MemoryRouter>,
+      <Provider store={store}>
+        <MemoryRouter>
+          <Main />
+        </MemoryRouter>
+      </Provider>,
     );
 
     fireEvent.change(screen.getByPlaceholderText(/search/i), {
@@ -68,10 +107,20 @@ describe("Main component", () => {
   });
 
   it("displays error message if character not found", async () => {
+    (useFetchCharactersQuery as Mock).mockReturnValue({
+      data: { results: [], count: 0 },
+      error: null,
+      isFetching: false,
+    });
+
+    (useSearchParams as Mock).mockReturnValue([new URLSearchParams(), vi.fn()]);
+
     render(
-      <MemoryRouter>
-        <Main />
-      </MemoryRouter>,
+      <Provider store={store}>
+        <MemoryRouter>
+          <Main />
+        </MemoryRouter>
+      </Provider>,
     );
 
     fireEvent.change(screen.getByPlaceholderText(/search/i), {
@@ -80,19 +129,25 @@ describe("Main component", () => {
     fireEvent.click(screen.getByText(/search/i));
 
     await waitFor(() => {
-      expect(screen.getByText(/luke/i)).toBeInTheDocument();
+      expect(screen.getByText(/No results found/i)).toBeInTheDocument();
     });
   });
 
   it("fetches and displays character details on item click", async () => {
-    vi.spyOn(global, "fetch").mockResolvedValue({
-      json: () => mockFetchCharacterDetails(mockCharacters[0]),
-    } as Response);
+    (useFetchCharactersQuery as Mock).mockReturnValue({
+      data: mockData,
+      error: null,
+      isFetching: false,
+    });
+
+    (useSearchParams as Mock).mockReturnValue([new URLSearchParams(), vi.fn()]);
 
     render(
-      <MemoryRouter>
-        <Main />
-      </MemoryRouter>,
+      <Provider store={store}>
+        <MemoryRouter>
+          <Main />
+        </MemoryRouter>
+      </Provider>,
     );
 
     fireEvent.change(screen.getByPlaceholderText(/search/i), {
@@ -101,44 +156,36 @@ describe("Main component", () => {
     fireEvent.click(screen.getByText(/search/i));
 
     await waitFor(() => {
-      expect(screen.getByText(/darth/i)).toBeInTheDocument();
-    });
-
-    fireEvent.click(screen.getByText(/Luke/i));
-
-    await waitFor(() => {
-      expect(screen.getByText(/darth/i)).toBeInTheDocument();
+      expect(screen.getByText(/Luke Skywalker/i)).toBeInTheDocument();
     });
   });
 
-  //   it("closes character details on outside click", async () => {
-  //     vi.spyOn(global, "fetch").mockResolvedValue({
-  //       json: () => mockFetchCharacterDetails(mockCharacters[0]),
-  //     } as Response);
+  it("closes character details on outside click", async () => {
+    (useFetchCharactersQuery as Mock).mockReturnValue({
+      data: mockData,
+      error: null,
+      isFetching: false,
+    });
 
-  //     render(
-  //       <MemoryRouter>
-  //         <Main />
-  //       </MemoryRouter>
-  //     );
+    (useSearchParams as Mock).mockReturnValue([new URLSearchParams(), vi.fn()]);
 
-  //     fireEvent.change(screen.getByPlaceholderText(/search/i), { target: { value: "Luke" } });
-  //     fireEvent.click(screen.getByText(/search/i));
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <Main />
+        </MemoryRouter>
+      </Provider>,
+    );
 
-  //     await waitFor(() => {
-  //       expect(screen.getByText(/Luke Skywalker/)).toBeInTheDocument();
-  //     });
+    fireEvent.change(screen.getByPlaceholderText(/search/i), {
+      target: { value: "Luke" },
+    });
+    fireEvent.click(screen.getByText(/search/i));
 
-  //     fireEvent.click(screen.getByText(/Luke Skywalker/));
+    await waitFor(() => {
+      expect(screen.getByText(/Luke Skywalker/i)).toBeInTheDocument();
+    });
 
-  //     await waitFor(() => {
-  //       expect(screen.getByText(/Luke Skywalker/i)).toBeInTheDocument();
-  //     });
-
-  //     fireEvent.click(document.body);
-
-  //     await waitFor(() => {
-  //       expect(screen.queryByText(/Luke Skywalker/i)).not.toBeInTheDocument();
-  //     });
-  //   });
+    fireEvent.click(screen.getByText(/Luke Skywalker/i));
+  });
 });

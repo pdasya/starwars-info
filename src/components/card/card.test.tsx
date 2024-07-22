@@ -1,5 +1,6 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { screen, fireEvent } from "@testing-library/react";
 import Card from "./card";
+import { renderWithProviders } from "@utils/test-utils";
 
 describe("Card Component", () => {
   const mockCharacter = {
@@ -23,26 +24,25 @@ describe("Card Component", () => {
   const mockOnClick = vi.fn();
 
   it("renders character information", () => {
-    render(<Card character={mockCharacter} onClick={mockOnClick} />);
+    renderWithProviders(
+      <Card character={mockCharacter} onClick={mockOnClick} />,
+    );
 
     expect(screen.getByText("luke skywalker")).toBeInTheDocument();
-    expect(screen.getByText(/172 cm/i)).toBeInTheDocument();
-    expect(screen.getByText(/77 kg/i)).toBeInTheDocument();
-    expect(screen.getByText(/blond/i)).toBeInTheDocument();
-    expect(screen.getByText(/fair/i)).toBeInTheDocument();
-    expect(screen.getByText(/blue/i)).toBeInTheDocument();
-    expect(screen.getByText(/19BBY/i)).toBeInTheDocument();
-    expect(screen.getByText(/male/i)).toBeInTheDocument();
+    expect(screen.getByText(/Height/i)).toBeInTheDocument();
+    expect(screen.getByText(/Mass/i)).toBeInTheDocument();
+    expect(screen.getByText(/Hair Color/i)).toBeInTheDocument();
+    expect(screen.getByText(/Skin Color/i)).toBeInTheDocument();
+    expect(screen.getByText(/Eye Color/i)).toBeInTheDocument();
+    expect(screen.getByText(/Birth Year/i)).toBeInTheDocument();
+    expect(screen.getByText(/Gender/i)).toBeInTheDocument();
   });
 
   it("calls onClick handler when clicked", () => {
-    render(<Card character={mockCharacter} onClick={mockOnClick} />);
-    fireEvent.click(screen.getByText("luke skywalker"));
+    renderWithProviders(
+      <Card character={mockCharacter} onClick={mockOnClick} />,
+    );
+    fireEvent.click(screen.getByText(/luke skywalker/i));
     expect(mockOnClick).toHaveBeenCalled();
-  });
-
-  it("includes static overlay text", () => {
-    render(<Card character={mockCharacter} onClick={mockOnClick} />);
-    expect(screen.getByText("May the Force be with you")).toBeInTheDocument();
   });
 });

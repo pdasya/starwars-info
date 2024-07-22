@@ -1,8 +1,19 @@
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, Mock } from "vitest";
 import { ICharacter } from "../../API/apiTypes";
-import * as api from "../../API/fetchResults";
 import DetailsSection from "./details-module";
+import { ThemeContext } from "@contexts/themeContext";
+import {
+  useFetchPlanetQuery,
+  useFetchStarshipsQuery,
+  useFetchVehiclesQuery,
+} from "@features/apiSlice";
+
+vi.mock("@features/apiSlice", () => ({
+  useFetchPlanetQuery: vi.fn(),
+  useFetchStarshipsQuery: vi.fn(),
+  useFetchVehiclesQuery: vi.fn(),
+}));
 
 describe("DetailsSection", () => {
   const mockCharacter: ICharacter = {
@@ -21,8 +32,47 @@ describe("DetailsSection", () => {
     isOpen: true,
   };
 
+  beforeEach(() => {
+    vi.resetAllMocks();
+    (useFetchStarshipsQuery as Mock).mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+    });
+    (useFetchVehiclesQuery as Mock).mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+    });
+    (useFetchPlanetQuery as Mock).mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: null,
+    });
+  });
+
   it("renders DetailsSection component correctly", () => {
-    render(<DetailsSection {...mockProps} />);
+    (useFetchStarshipsQuery as Mock).mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+    });
+    (useFetchVehiclesQuery as Mock).mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+    });
+    (useFetchPlanetQuery as Mock).mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: null,
+    });
+
+    render(
+      <ThemeContext.Provider value={{ darkTheme: false }}>
+        <DetailsSection {...mockProps} />
+      </ThemeContext.Provider>,
+    );
     expect(screen.getByText(/Luke Skywalker/)).toBeInTheDocument();
   });
 
@@ -31,11 +81,27 @@ describe("DetailsSection", () => {
     const mockVehicles = [{ name: "Speeder Bike" }];
     const mockPlanet = { name: "Tatooine" };
 
-    vi.spyOn(api, "fetchStarships").mockResolvedValue(mockStarships);
-    vi.spyOn(api, "fetchVehicles").mockResolvedValue(mockVehicles);
-    vi.spyOn(api, "fetchPlanet").mockResolvedValue(mockPlanet);
+    (useFetchStarshipsQuery as Mock).mockReturnValue({
+      data: mockStarships,
+      isLoading: false,
+      error: null,
+    });
+    (useFetchVehiclesQuery as Mock).mockReturnValue({
+      data: mockVehicles,
+      isLoading: false,
+      error: null,
+    });
+    (useFetchPlanetQuery as Mock).mockReturnValue({
+      data: mockPlanet,
+      isLoading: false,
+      error: null,
+    });
 
-    render(<DetailsSection {...mockProps} />);
+    render(
+      <ThemeContext.Provider value={{ darkTheme: false }}>
+        <DetailsSection {...mockProps} />
+      </ThemeContext.Provider>,
+    );
 
     await waitFor(() => {
       expect(screen.getByText(/X-Wing/)).toBeInTheDocument();
@@ -45,27 +111,57 @@ describe("DetailsSection", () => {
   });
 
   it("displays error message if fetching starships fails", async () => {
-    vi.spyOn(api, "fetchStarships").mockRejectedValue(
-      new Error("Error fetching starships"),
-    );
+    (useFetchStarshipsQuery as Mock).mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: new Error("Error fetching starships"),
+    });
+    (useFetchVehiclesQuery as Mock).mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+    });
+    (useFetchPlanetQuery as Mock).mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: null,
+    });
 
-    render(<DetailsSection {...mockProps} />);
+    render(
+      <ThemeContext.Provider value={{ darkTheme: false }}>
+        <DetailsSection {...mockProps} />
+      </ThemeContext.Provider>,
+    );
 
     await waitFor(() => {
       expect(
-        screen.getByText(
-          /No homeworld information available for this character/i,
-        ),
+        screen.getByText(/No starships available for this character/i),
       ).toBeInTheDocument();
     });
   });
 
   it("displays error message if fetching vehicles fails", async () => {
-    vi.spyOn(api, "fetchVehicles").mockRejectedValue(
-      new Error("Error fetching vehicles"),
-    );
+    (useFetchVehiclesQuery as Mock).mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: new Error("Error fetching vehicles"),
+    });
+    (useFetchPlanetQuery as Mock).mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: null,
+    });
+    (useFetchStarshipsQuery as Mock).mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: null,
+    });
 
-    render(<DetailsSection {...mockProps} />);
+    render(
+      <ThemeContext.Provider value={{ darkTheme: false }}>
+        <DetailsSection {...mockProps} />
+      </ThemeContext.Provider>,
+    );
 
     await waitFor(() => {
       expect(
@@ -75,11 +171,27 @@ describe("DetailsSection", () => {
   });
 
   it("displays error message if fetching planet fails", async () => {
-    vi.spyOn(api, "fetchPlanet").mockRejectedValue(
-      new Error("Error fetching planet"),
-    );
+    (useFetchPlanetQuery as Mock).mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: new Error("Error fetching planet"),
+    });
+    (useFetchStarshipsQuery as Mock).mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: null,
+    });
+    (useFetchVehiclesQuery as Mock).mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+    });
 
-    render(<DetailsSection {...mockProps} />);
+    render(
+      <ThemeContext.Provider value={{ darkTheme: false }}>
+        <DetailsSection {...mockProps} />
+      </ThemeContext.Provider>,
+    );
 
     await waitFor(() => {
       expect(
@@ -91,7 +203,11 @@ describe("DetailsSection", () => {
   });
 
   it("calls onClose when close button is clicked", () => {
-    render(<DetailsSection {...mockProps} />);
+    render(
+      <ThemeContext.Provider value={{ darkTheme: false }}>
+        <DetailsSection {...mockProps} />
+      </ThemeContext.Provider>,
+    );
     fireEvent.click(screen.getByRole("button", { name: /close/i }));
     expect(mockProps.onClose).toHaveBeenCalled();
   });

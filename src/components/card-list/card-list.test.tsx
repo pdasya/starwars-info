@@ -1,15 +1,15 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import CardList from "./card-list";
 import { ICharacter } from "../../API/apiTypes";
+import { renderWithProviders } from "@utils/test-utils";
 
 interface IMockProps {
   character: ICharacter;
   onClick: () => void;
 }
 
-vi.mock("../card-component/card-component", () => {
+vi.mock("../card/card", () => {
   return {
     __esModule: true,
     default: ({ character, onClick }: IMockProps) => (
@@ -22,18 +22,32 @@ vi.mock("../card-component/card-component", () => {
 
 describe("Result Component", () => {
   const mockCharacters = [
-    { name: "Luke Skywalker", url: "1" },
-    { name: "Darth Vader", url: "2" },
+    {
+      name: "Luke Skywalker",
+      url: "1",
+      vehicles: ["Snowspeeder", "Imperial Speeder Bike"],
+      starships: ["X-wing", "Imperial shuttle"],
+    },
+    {
+      name: "Darth Vader",
+      url: "2",
+      vehicles: ["31"],
+      starships: ["TIE Advanced x1"],
+    },
   ];
 
   it("displays no results message when there are no results", () => {
-    render(<CardList results={[]} onItemClick={vi.fn()} />);
-    expect(screen.getByText("No results found.")).toBeInTheDocument();
+    const { getByText } = renderWithProviders(
+      <CardList results={[]} onItemClick={vi.fn()} />,
+    );
+    expect(getByText("No results found.")).toBeInTheDocument();
   });
 
   it("renders cards for each result when results are present", () => {
-    render(<CardList results={mockCharacters} onItemClick={vi.fn()} />);
-    const cards = screen.getAllByTestId("mock-card");
+    const { getAllByTestId } = renderWithProviders(
+      <CardList results={mockCharacters} onItemClick={vi.fn()} />,
+    );
+    const cards = getAllByTestId("mock-card");
     expect(cards.length).toBe(2);
     expect(cards[0]).toHaveTextContent("Luke Skywalker");
     expect(cards[1]).toHaveTextContent("Darth Vader");
@@ -41,9 +55,11 @@ describe("Result Component", () => {
 
   it("calls onItemClick when a card is clicked", async () => {
     const onItemClick = vi.fn();
-    render(<CardList results={mockCharacters} onItemClick={onItemClick} />);
+    const { getAllByTestId } = renderWithProviders(
+      <CardList results={mockCharacters} onItemClick={onItemClick} />,
+    );
 
-    const firstCard = screen.getAllByTestId("mock-card")[0];
+    const firstCard = getAllByTestId("mock-card")[0];
     await userEvent.click(firstCard);
 
     expect(onItemClick).toHaveBeenCalledTimes(1);
