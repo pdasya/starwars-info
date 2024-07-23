@@ -1,4 +1,3 @@
-// mockData.ts
 export const mockApiResponse = {
   count: 1,
   next: null,

@@ -1,0 +1,52 @@
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+.toggleWrapper {
+  width: 90vw;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.toggleInput[type="checkbox"] {
+  visibility: hidden;
+}
+
+.toggleInput[type="checkbox"]:checked + .toggleLabel {
+  transform: rotate(360deg);
+  background-color: transparent;
+}
+
+.toggleInput[type="checkbox"]:checked + .toggleLabel:before {
+  transform: translateX(35px);
+  background-color: #fff;
+}
+
+.toggleLabel {
+  display: flex;
+  width: 80px;
+  height: 35px;
+  border: 6px solid;
+  border-radius: 99em;
+  position: relative;
+  transition: transform 0.75s ease-in-out;
+  transform-origin: 50% 50%;
+  cursor: pointer;
+}
+
+.toggleLabel:before {
+  transition: transform 0.75s ease;
+  transition-delay: 0.5s;
+  content: "";
+  display: block;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 7px;
+}

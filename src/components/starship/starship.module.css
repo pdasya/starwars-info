@@ -1,0 +1,19 @@
+.starshipsSection {
+  margin-top: 20px;
+  border-top: 1px solid black;
+  font-family: "Starjedi";
+  text-transform: lowercase;
+}
+
+.darkThemeStarshipsSection {
+  color: white;
+}
+
+.starshipsHeader {
+  text-decoration: underline;
+}
+
+.starshipsItem {
+  list-style: none;
+  padding: 0;
+}

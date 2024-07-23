@@ -1,9 +1,11 @@
 import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
-import ReactDOM from "react-dom/client";
-import App from "./app/App";
+import * as ReactDOM from "react-dom/client";
+import App from "./App";
 import "./index.css";
-import React from "react";
+import * as React from "react";
+import { Provider } from "react-redux";
+import store from "@app/store";
 
 describe("Root component", () => {
   it("renders App without crashing", () => {
@@ -12,9 +14,11 @@ describe("Root component", () => {
     document.body.appendChild(rootElement);
 
     ReactDOM.createRoot(rootElement).render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>,
+      <Provider store={store}>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </Provider>,
     );
 
     expect(rootElement).toBeDefined();
@@ -23,9 +27,11 @@ describe("Root component", () => {
 
   it("checks if App component is rendered", () => {
     const { getByText } = render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>,
+      <Provider store={store}>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </Provider>,
     );
     expect(getByText(/Find info about/i)).toBeInTheDocument();
   });

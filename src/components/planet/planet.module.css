@@ -1,0 +1,14 @@
+.planetSection {
+  margin-top: 20px;
+  border-top: 1px solid black;
+  font-family: "Starjedi";
+  text-transform: lowercase;
+}
+
+.darkThemePlanetSection {
+  color: white;
+}
+
+.planetHeader {
+  text-decoration: underline;
+}

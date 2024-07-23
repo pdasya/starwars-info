@@ -1,8 +1,8 @@
 import { ChangeEvent, FC } from "react";
-import { ICharacter } from "../../API/apiTypes";
-import Search from "../../components/search-component/search-component";
-import Result from "../../components/results-component/results-component";
-import Pagination from "../../components/pagination-component/pagination-component";
+import { ICharacter } from "@API/apiTypes";
+import Search from "@components/search/search";
+import Result from "@components/card-list/card-list";
+import Pagination from "@components/pagination/pagination";
 import styles from "./search-module.module.css";
 
 interface SearchSectionProps {
@@ -11,7 +11,7 @@ interface SearchSectionProps {
   currentPage: number;
   totalPages: number;
   isLoading: boolean;
-  onSearch: (term: string, page: number) => void;
+  onSearch: () => void;
   onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onItemClick: (character: ICharacter) => void;
   onPageChange: (page: number) => void;
@@ -33,7 +33,7 @@ const SearchSection: FC<SearchSectionProps> = ({
       <Search
         searchTerm={searchTerm}
         onInputChange={onInputChange}
-        onSearch={() => onSearch(searchTerm, 1)}
+        onSearch={onSearch}
       />
       {isLoading ? (
         <div className={styles.overlay}>
