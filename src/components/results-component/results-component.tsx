@@ -1,27 +1,28 @@
-import { Component } from "react";
+import { FC } from "react";
 import styles from "./results-component.module.css";
-import { Character } from "../../API/apiTypes";
+import { ICharacter } from "../../API/apiTypes";
 import Card from "../card-component/card-component";
 
 interface ResultsProps {
-  results: Character[];
+  results: ICharacter[];
+  onItemClick: (character: ICharacter) => void;
 }
 
-class Result extends Component<ResultsProps> {
-  render() {
-    const { results } = this.props;
-
-    if (!results || results.length === 0) {
-      return <div className={styles.resultsWrapper}>No results found.</div>;
-    }
-    return (
-      <div className={styles.resultsWrapper}>
-        {results.map((character) => (
-          <Card character={character} key={character.url} />
-        ))}
-      </div>
-    );
+const Result: FC<ResultsProps> = ({ results, onItemClick }) => {
+  if (!results || results.length === 0) {
+    return <div className={styles.resultsWrapper}>No results found.</div>;
   }
-}
+  return (
+    <div className={styles.resultsWrapper}>
+      {results.map((character) => (
+        <Card
+          character={character}
+          key={character.url}
+          onClick={() => onItemClick(character)}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default Result;

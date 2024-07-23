@@ -5,3 +5,4 @@ public
 *.test.tsx.snap
 .prettierignore
 .eslintignore
+.husky/pre-push

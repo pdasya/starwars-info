@@ -1,48 +1,43 @@
-import { ChangeEvent, KeyboardEvent, Component } from "react";
+import { ChangeEvent, KeyboardEvent, FC } from "react";
 import styles from "./search-component.module.css";
 
 interface SearchProps {
   searchTerm: string;
   onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSearch: () => void;
-  onThrowError: () => void;
 }
 
-class Search extends Component<SearchProps> {
-  handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+const Search: FC<SearchProps> = ({ searchTerm, onInputChange, onSearch }) => {
+  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      this.props.onSearch();
+      onSearch();
     }
   };
 
-  render() {
-    return (
-      <div className={styles.searchWrapper}>
-        <h1 className={styles.searchHeader}>
-          Find info about your favourite Star Wars Character!
-        </h1>
-        <div className={styles.searchContainer}>
-          <input
-            type="text"
-            className={styles.searchInput}
-            placeholder="Search..."
-            value={this.props.searchTerm}
-            onChange={this.props.onInputChange}
-            onKeyPress={this.handleKeyPress}
-          />
-          <button className={styles.searchButton} onClick={this.props.onSearch}>
-            Search
-          </button>
-        </div>
-        <button
-          className={styles.errorButton}
-          onClick={this.props.onThrowError}
-        >
-          Throw error
+  const handleSubmit = () => {
+    onSearch();
+  };
+
+  return (
+    <div className={styles.searchWrapper}>
+      <h1 className={styles.searchHeader}>
+        Find info about your favourite Star Wars Character!
+      </h1>
+      <div className={styles.searchContainer}>
+        <input
+          type="search"
+          className={styles.searchInput}
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={onInputChange}
+          onKeyPress={handleKeyPress}
+        />
+        <button className={styles.searchButton} onClick={handleSubmit}>
+          Search
         </button>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Search;
