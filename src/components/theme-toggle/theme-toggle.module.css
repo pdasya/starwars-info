@@ -21,7 +21,7 @@
 }
 
 .toggleInput[type="checkbox"]:checked + .toggleLabel:before {
-  transform: translateX(35px);
+  transform: translateX(40px);
   background-color: #fff;
 }
 
@@ -43,10 +43,10 @@
   content: "";
   display: block;
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   background-color: white;
   border-radius: 50%;
-  top: 2px;
+  top: 5px;
   left: 7px;
 }
