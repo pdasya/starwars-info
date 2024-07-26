@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Starjedi";
+  src: url("../../../public/Starjedi.ttf");
+}
+
 .characterCard {
   width: 300px;
   height: 360px;
@@ -51,6 +56,9 @@
   padding: 0;
   margin: 20px 0 0 0;
   text-align: left;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20px;
+  margin-left: 20px;
 }
 
 .characterDetails li {
