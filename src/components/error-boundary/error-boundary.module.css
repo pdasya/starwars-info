@@ -7,7 +7,7 @@
   max-width: 1920px;
   width: 100vw;
   height: 100vh;
-  background-image: url("/background-error-boundary.jpg");
+  background-image: url("../../../public/background-error-boundary.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

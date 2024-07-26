@@ -1,6 +1,6 @@
-*,
-*:after,
-*:before {
+.toggleWrapper,
+.toggleWrapper:after,
+.toggleWrapper:before {
   box-sizing: border-box;
 }
 

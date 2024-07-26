@@ -6,3 +6,5 @@ public
 .prettierignore
 .eslintignore
 .husky/pre-push
+src/app/favicon.png
+.gitignore
