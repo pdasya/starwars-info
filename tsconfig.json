@@ -31,6 +31,7 @@
       "@utils/*": ["src/utils/*"],
       "@features/*": ["src/features/*"],
       "@contexts/*": ["src/contexts/*"],
+      "@store/*": ["src/store/*"],
       "@/*": ["src/*"]
     }
   },

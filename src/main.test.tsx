@@ -5,7 +5,7 @@ import App from "./App";
 import "./index.css";
 import * as React from "react";
 import { Provider } from "react-redux";
-import store from "@app/store";
+import store from "@/store/store";
 
 describe("Root component", () => {
   it("renders App without crashing", () => {

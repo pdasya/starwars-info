@@ -3,7 +3,7 @@ import * as React from "react";
 import { render } from "@testing-library/react";
 import type { RenderOptions, RenderResult } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { AppStore, RootState, setupStore } from "@app/store";
+import { AppStore, RootState, setupStore } from "@/store/store";
 import { MemoryRouter } from "react-router-dom";
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {

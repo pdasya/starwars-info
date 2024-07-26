@@ -4,7 +4,7 @@ import Main from "./main-page";
 import { ICharacter } from "../../API/apiTypes";
 import { MemoryRouter, useSearchParams } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "@app/store";
+import store from "@/store/store";
 import { useFetchCharactersQuery } from "@features/apiSlice";
 
 // Mock the hooks

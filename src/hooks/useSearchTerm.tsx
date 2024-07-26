@@ -2,14 +2,18 @@ import { useEffect, useState } from "react";
 
 const useSearchTerm = (key: string, initialValue: string) => {
   const [value, setValue] = useState<string>(() => {
-    const savedValue = localStorage.getItem(key);
-    return savedValue !== null ? savedValue : initialValue;
+    if (typeof window !== "undefined") {
+      const savedValue = localStorage.getItem(key);
+      return savedValue !== null ? savedValue : initialValue;
+    } else {
+      return initialValue;
+    }
   });
 
   useEffect(() => {
-    return () => {
+    if (typeof window !== "undefined") {
       localStorage.setItem(key, value);
-    };
+    }
   }, [key, value]);
 
   return [value, setValue] as const;
