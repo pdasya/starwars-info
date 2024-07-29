@@ -7,7 +7,7 @@ import DetailsSection from "@modules/details-module/details-module";
 import SearchSection from "@modules/search-module/search-module";
 import useSearchTerm from "@hooks/useSearchTerm";
 import { setCurrentPage } from "@features/currentPageSlice";
-import styles from "../../views/main-page/main-page.module.css";
+import styles from "../../styles/main-page.module.css";
 import { AppDispatch, RootState } from "@/store/store";
 
 const Main: FC = () => {

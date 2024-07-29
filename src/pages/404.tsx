@@ -1,5 +1,5 @@
 import { FC } from "react";
-import styles from "../views/error-page/error-page.module.css";
+import styles from "../styles/error-page.module.css";
 import Link from "next/link";
 import "../App.css";
 

@@ -1,10 +1,10 @@
 @font-face {
   font-family: "StarJedi";
-  src: url("../../../public/Starjedi.ttf");
+  src: url("../../public/Starjedi.ttf");
 }
 
 .errorPageWrapper {
-  background-image: url("../../../public/background-404.jpg");
+  background-image: url("../../public/background-404.jpg");
   background-size: cover;
   background-position: center;
   width: 100vw;
