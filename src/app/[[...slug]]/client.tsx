@@ -3,8 +3,9 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
-const App = dynamic(() => import("../../App"), { ssr: false });
+const MyApp = dynamic(() => import("../../pages/_app"), { ssr: false });
 
 export function ClientOnly() {
-  return <App />;
+  const AppComponent = MyApp as React.ComponentType<any>;
+  return <AppComponent Component={() => null} pageProps={{}} />;
 }

@@ -6,7 +6,7 @@ import { ThemeContext } from "@contexts/themeContext";
 import { useState } from "react";
 import "../App.css";
 
-const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   const [darkTheme, setDarkTheme] = useState<boolean>(false);
 
   return (

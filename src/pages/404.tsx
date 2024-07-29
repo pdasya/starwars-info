@@ -10,7 +10,7 @@ const ErrorPage: FC = () => {
         The page you are looking for might be removed or is temporarily
         unavailable
       </p>
-      <Link href="/" className={styles.errorPageLink}>
+      <Link href="/main" className={styles.errorPageLink}>
         Back to Homepage
       </Link>
     </div>

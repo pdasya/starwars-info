@@ -7,7 +7,7 @@ import DetailsSection from "@modules/details-module/details-module";
 import SearchSection from "@modules/search-module/search-module";
 import useSearchTerm from "@hooks/useSearchTerm";
 import { setCurrentPage } from "@features/currentPageSlice";
-import styles from "../views/main-page/main-page.module.css";
+import styles from "../../views/main-page/main-page.module.css";
 import { AppDispatch, RootState } from "@/store/store";
 
 const Main: FC = () => {
@@ -62,7 +62,7 @@ const Main: FC = () => {
 
   const handlePageChange = (page: number) => {
     router.push({
-      pathname: "/",
+      pathname: "/main",
       query: { search: searchTerm, page: page.toString() },
     });
     dispatch(setCurrentPage(page));
@@ -70,7 +70,7 @@ const Main: FC = () => {
 
   const handleItemClick = (character: ICharacter) => {
     router.push({
-      pathname: "/",
+      pathname: "/main",
       query: {
         search: searchTerm,
         page: currentPage.currentPage.toString(),
@@ -82,7 +82,7 @@ const Main: FC = () => {
 
   const handleItemClose = () => {
     router.push({
-      pathname: "/",
+      pathname: "/main",
       query: { search: searchTerm, page: currentPage.currentPage.toString() },
     });
     setSelectedCharacter(null);
@@ -99,7 +99,7 @@ const Main: FC = () => {
 
   const handleSearch = () => {
     router.push({
-      pathname: "/",
+      pathname: "/main",
       query: { search: searchTerm, page: "1" },
     });
     dispatch(setCurrentPage(1));
