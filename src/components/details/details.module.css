@@ -1,6 +1,7 @@
 .detailsContainer {
   font-family: "Starjedi";
   text-transform: lowercase;
+  text-align: center;
 }
 
 .darkThemeDetailsContainer {

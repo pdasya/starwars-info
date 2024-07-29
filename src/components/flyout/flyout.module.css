@@ -10,6 +10,7 @@
   justify-content: space-between;
   align-items: center;
   z-index: 100;
+  font-family: "Starjedi";
 }
 
 .flyout span {
@@ -23,6 +24,9 @@
   background-color: #000;
   color: #fff;
   cursor: pointer;
+  font-family: "Starjedi";
+  text-transform: lowercase;
+  letter-spacing: 1px;
 }
 
 .flyout button:hover {
