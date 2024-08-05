@@ -14,7 +14,7 @@ const Page = ({ params }: { params: { slug: string[] } }) => {
     redirect("/main");
   }
 
-  if (slug[0] !== "main") {
+  if (slug[1] !== "main") {
     return <ErrorPage />;
   }
 
