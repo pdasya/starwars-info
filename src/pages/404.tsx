@@ -1,7 +1,6 @@
 import { FC } from "react";
 import styles from "../styles/error-page.module.css";
 import Link from "next/link";
-import "../App.css";
 
 const ErrorPage: FC = () => {
   return (
