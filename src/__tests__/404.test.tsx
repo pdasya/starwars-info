@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import ErrorPage from "./404";
+import ErrorPage from "../pages/404";
 
 describe("ErrorPage component", () => {
   it("renders the error message correctly", () => {

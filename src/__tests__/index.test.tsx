@@ -1,7 +1,7 @@
 import { screen, waitFor, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, Mock, beforeEach } from "vitest";
-import Main from "./index";
-import { ICharacter } from "../../API/apiTypes";
+import Main from "../pages/main/index";
+import { ICharacter } from "../API/apiTypes";
 import store from "@store/store";
 import { useFetchCharactersQuery } from "@features/apiSlice";
 import mockRouter from "next-router-mock";
