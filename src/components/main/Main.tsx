@@ -1,5 +1,7 @@
+"use client";
+
 import { ChangeEvent, FC, useEffect, useMemo, useRef, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { IApiResponse, ICharacter } from "@API/apiTypes";
 import DetailsSection from "@modules/details-module/details-module";
@@ -26,6 +28,7 @@ const Main: FC<MainProps> = ({
     initialSearchQuery,
   );
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const currentPage = useSelector((state: RootState) => state.currentPage);
   const [selectedCharacter, setSelectedCharacter] = useState<ICharacter | null>(
@@ -34,8 +37,9 @@ const Main: FC<MainProps> = ({
 
   const detailsRef = useRef<HTMLDivElement>(null);
 
-  const { character } = router.query;
-  const characterQuery = character?.toString() || "";
+  const characterQuery = searchParams
+    ? searchParams.get("character") || ""
+    : "";
 
   const [data, setData] = useState<IApiResponse>(initialData);
   const [isFetching, setIsFetching] = useState(false);
@@ -70,10 +74,7 @@ const Main: FC<MainProps> = ({
   };
 
   const handlePageChange = async (page: number) => {
-    router.push({
-      pathname: "/main",
-      query: { search: searchTerm, page: page.toString() },
-    });
+    router.push(`/main?search=${searchTerm}&page=${page}`);
     dispatch(setCurrentPage(page));
 
     setIsFetching(true);
@@ -92,22 +93,14 @@ const Main: FC<MainProps> = ({
   };
 
   const handleItemClick = (character: ICharacter) => {
-    router.push({
-      pathname: "/main",
-      query: {
-        search: searchTerm,
-        page: currentPage.currentPage.toString(),
-        character: character.name,
-      },
-    });
+    router.push(
+      `/main?search=${searchTerm}&page=${currentPage.currentPage}&character=${character.name}`,
+    );
     setSelectedCharacter(character);
   };
 
   const handleItemClose = () => {
-    router.push({
-      pathname: "/main",
-      query: { search: searchTerm, page: currentPage.currentPage.toString() },
-    });
+    router.push(`/main?search=${searchTerm}&page=${currentPage.currentPage}`);
     setSelectedCharacter(null);
   };
 
@@ -121,10 +114,7 @@ const Main: FC<MainProps> = ({
   };
 
   const handleSearch = async () => {
-    router.push({
-      pathname: "/main",
-      query: { search: searchTerm, page: "1" },
-    });
+    router.push(`/main?search=${searchTerm}&page=1`);
     dispatch(setCurrentPage(1));
 
     setIsFetching(true);
