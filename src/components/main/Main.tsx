@@ -1,5 +1,3 @@
-// components/Main.tsx
-
 import { ChangeEvent, FC, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
