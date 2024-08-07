@@ -10,6 +10,7 @@ import useSearchTerm from "@hooks/useSearchTerm";
 import { setCurrentPage } from "@features/currentPageSlice";
 import styles from "../../styles/main-page.module.css";
 import { AppDispatch, RootState } from "@/store/store";
+import "../../App.css";
 
 export interface MainProps {
   initialData: IApiResponse;
