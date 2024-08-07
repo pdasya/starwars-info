@@ -19,7 +19,7 @@ interface ServerFetcherProps {
   };
 }
 
-const Page = async ({ searchParams }: ServerFetcherProps) => {
+const ServerFetcher = async ({ searchParams }: ServerFetcherProps) => {
   const searchQuery = searchParams.search || "";
   const pageQuery = Number(searchParams.page) || 1;
 
@@ -34,4 +34,4 @@ const Page = async ({ searchParams }: ServerFetcherProps) => {
   );
 };
 
-export default Page;
+export default ServerFetcher;
