@@ -2,7 +2,7 @@
 
 import { createContext } from "react";
 
-interface ThemeContextProps {
+export interface ThemeContextProps {
   darkTheme: boolean;
   setDarkTheme?: React.Dispatch<React.SetStateAction<boolean>>;
 }
