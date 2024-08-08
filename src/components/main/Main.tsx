@@ -121,7 +121,7 @@ const Main: FC<MainProps> = ({
     setIsFetching(true);
     try {
       const res = await fetch(
-        `https://swapi.dev/api/people/?search=${searchTerm}&page=1}`,
+        `https://swapi.dev/api/people/?search=${searchTerm}&page=1`,
       );
       const newData = await res.json();
       setData(newData);
