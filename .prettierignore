@@ -6,3 +6,4 @@ public
 .prettierignore
 .eslintignore
 .husky/pre-push
+.husky/pre-commit
