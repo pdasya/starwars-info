@@ -16,11 +16,20 @@ export default tseslint.config({
     "react-hooks": reactHooks,
     "react-refresh": reactRefresh,
   },
+  ignores: ["dist"],
   rules: {
     ...reactHooks.configs.recommended.rules,
     "react-refresh/only-export-components": [
       "warn",
       { allowConstantExport: true },
     ],
+    "no-param-reassign": "off",
+    "import/extensions": "off",
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-explicit-any": "error",
+    "no-nested-ternary": "off",
+    "react/jsx-props-no-spreading": "off",
+    "no-debugger": "warn",
+    "react/require-default-props": "off",
   },
 });
