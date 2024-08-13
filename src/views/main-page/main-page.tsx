@@ -5,8 +5,8 @@ import style from "./main-page.module.css";
 const Main: FC = () => {
   return (
     <div className={style.buttonWrapper}>
-      <Button formName="Controlled Form"></Button>
-      <Button formName="Uncontrolled Form"></Button>
+      <Button formName="Controlled Form" to="/controlled-form"></Button>
+      <Button formName="Uncontrolled Form" to="/uncontrolled-form"></Button>
     </div>
   );
 };
