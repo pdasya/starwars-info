@@ -2,9 +2,16 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  max-width: 600px;
 }
 
 .checkboxWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.checkboxContent {
   display: flex;
   justify-content: flex-start;
   gap: 5px;
@@ -45,4 +52,9 @@
   -webkit-text-stroke: 1px black;
   color: transparent;
   letter-spacing: 2px;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 20px;
 }

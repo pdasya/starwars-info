@@ -1,17 +1,24 @@
 import { FC } from "react";
 import style from "./input.module.css";
-import { FieldError } from "react-hook-form";
+import { FieldError, UseFormRegister } from "react-hook-form";
 
 interface InputFieldProps {
   label: string;
   id: string;
   type?: string;
-  //   register: ReturnType<typeof import('react-hook-form')['useForm']>['register'];
+  register: UseFormRegister<any>;
   validation?: object;
   error?: FieldError;
 }
 
-const Input: FC<InputFieldProps> = ({ label, id, type = "text" }) => {
+const Input: FC<InputFieldProps> = ({
+  label,
+  id,
+  type = "text",
+  register,
+  validation,
+  error,
+}) => {
   return (
     <div className={style.formGroup}>
       <input
@@ -19,10 +26,12 @@ const Input: FC<InputFieldProps> = ({ label, id, type = "text" }) => {
         className={style.formField}
         placeholder={label}
         id={id}
+        {...register(id, validation)}
       />
       <label htmlFor={id} className={style.formLabel}>
         {label}
       </label>
+      {error && <span className={style.errorMessage}>{error.message}</span>}
     </div>
   );
 };

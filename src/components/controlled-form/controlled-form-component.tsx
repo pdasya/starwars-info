@@ -2,89 +2,100 @@ import { FC } from "react";
 import style from "./controlled-form-component.module.css";
 import Input from "../../components/input/input";
 import Select from "../select/select";
+import validationSchema from "../../utils/validationSchema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
 const ControlledFormComponent: FC = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
+
+  const onSubmit = (data: unknown) => {
+    console.log(data);
+  };
+
   return (
-    <form className={style.controlledFormWrapper}>
-      <Input
-        label="Name"
-        id="name"
-        validation={{
-          required: "Name is required",
-          pattern: {
-            value: /^[A-Z]/,
-            message: "First letter must be uppercase",
-          },
-        }}
-      />
+    <form
+      className={style.controlledFormWrapper}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Input label="Name" id="name" register={register} error={errors.name} />
       <Input
         label="Age"
         id="age"
         type="number"
-        validation={{
-          required: "Age is required",
-          min: { value: 0, message: "Age must be non-negative" },
-        }}
+        register={register}
+        error={errors.age}
       />
 
       <Input
         label="Email"
         id="email"
         type="email"
-        validation={{
-          required: "Email is required",
-          pattern: {
-            value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-            message: "Invalid email address",
-          },
-        }}
+        register={register}
+        error={errors.email}
       />
 
       <Input
         label="Password"
         id="password"
         type="password"
-        validation={{
-          required: "Password is required",
-          validate:
-            "Password must contain at least one number, one uppercase letter, one lowercase letter, and one special character",
-        }}
+        register={register}
+        error={errors.password}
       />
 
       <Input
         label="Confirm Password"
         id="confirmPassword"
         type="password"
-        validation={{
-          required: "Name is required",
-          pattern: {
-            value: /^[A-Z]/,
-            message: "First letter must be uppercase",
-          },
-        }}
+        register={register}
+        error={errors.confirmPassword}
       />
 
       <Select
         label="Gender"
         id="gender"
         options={["Male", "Female", "Other"]}
-      ></Select>
+        register={register}
+        error={errors.gender}
+      />
 
       <div className={style.checkboxWrapper}>
-        <input id="termsAccepted" type="checkbox" />
-        <label htmlFor="termsAccepted">Accept Terms and Conditions</label>
+        <div className={style.checkboxContent}>
+          <input
+            id="termsAccepted"
+            type="checkbox"
+            {...register("termsAccepted")}
+          />
+          <label htmlFor="termsAccepted">Accept Terms and Conditions</label>
+        </div>
+        {errors.termsAccepted && (
+          <span className={style.errorMessage}>
+            {errors.termsAccepted.message}
+          </span>
+        )}
       </div>
 
       <div className={style.pictureWrapper}>
         <label htmlFor="picture">Upload Picture</label>
-        <input id="picture" type="file" />
+        <input id="picture" type="file" {...register("picture")} />
+        {errors.picture && (
+          <span className={style.errorMessage}>{errors.picture.message}</span>
+        )}
       </div>
 
       <Select
         label="Country"
         id="country"
         options={["USA", "Germany", "France"]}
-      ></Select>
+        register={register}
+        error={errors.country}
+      />
 
       <button type="submit" className={style.submitButton}>
         Submit
