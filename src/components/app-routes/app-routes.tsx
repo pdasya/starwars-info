@@ -2,7 +2,7 @@ import * as React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Main from "../../views/main-page/main-page";
 import ErrorPage from "../../views/error-page/error-page";
-import ControlledForm from "../../views/controlled-form/controlled-form";
+import ControlledForm from "../../views/controlled-form-page/controlled-form";
 import UncontrolledForm from "../../views/uncontrolled-form/uncontrolled-form";
 
 const AppRoutes: React.FC = () => {
