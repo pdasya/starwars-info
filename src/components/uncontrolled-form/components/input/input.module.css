@@ -1,0 +1,92 @@
+:root {
+  --primary: #11998e;
+  --secondary: #38ef7d;
+  --white: #fff;
+  --gray: #9b9b9b;
+}
+
+.formGroup {
+  position: relative;
+  padding: 15px 0 0;
+  width: 100%;
+
+  text-transform: lowercase;
+  letter-spacing: 2px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.formField {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid var(--gray);
+  outline: 0;
+  font-size: 1.3rem;
+  color: var(--white);
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.formField::placeholder {
+  color: transparent;
+}
+
+.formField:placeholder-shown ~ .formLabel {
+  font-size: 1.3rem;
+  cursor: text;
+  top: 20px;
+}
+
+.formLabel {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: var(--gray);
+}
+
+.formField:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 2px;
+  border-image: linear-gradient(to right, var(--primary), var(--secondary));
+  border-image-slice: 1;
+}
+
+.formField:focus ~ .formLabel {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.formField:required,
+.formField:invalid {
+  box-shadow: none;
+}
+
+body {
+  font-family: "StarJedi";
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.5rem;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 12px;
+  min-height: 18px;
+  margin-top: 5px;
+}

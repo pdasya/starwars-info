@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
-import { fetchCountries } from "../../features/countrySlice";
+import { AppDispatch, RootState } from "../../../../store/store";
+import { fetchCountries } from "../../../../features/countrySlice";
 import { UseFormRegister } from "react-hook-form";
 import style from "./auto-complete.module.css";
 

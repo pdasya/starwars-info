@@ -1,14 +1,14 @@
 import { FC } from "react";
 import style from "./controlled-form-component.module.css";
-import Input from "../../components/input/input";
-import Select from "../select/select";
+import Input from "./components/input/input";
 import validationSchema from "../../utils/validationSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import AutocompleteSelect from "../auto-complete/auto-complete";
+import AutocompleteSelect from "./components/auto-complete/auto-complete";
 import { useDispatch } from "react-redux";
-import { saveFormData } from "../../features/formSlice";
+import { saveControlledFormData } from "../../features/controlledFormSlice";
 import { useNavigate } from "react-router-dom";
+import Select from "./components/select/select";
 
 interface FormData {
   name: string;
@@ -44,7 +44,7 @@ const ControlledFormComponent: FC = () => {
         ...data,
         picture: base64String,
       };
-      dispatch(saveFormData(formDataWithImage));
+      dispatch(saveControlledFormData(formDataWithImage));
       navigate("/");
     };
 

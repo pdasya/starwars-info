@@ -6,7 +6,7 @@ import { RootState } from "../../store/store";
 
 const Main: FC = () => {
   const formDataArray = useSelector(
-    (state: RootState) => state.formData.formData,
+    (state: RootState) => state.controlledForm.formData,
   );
 
   return (

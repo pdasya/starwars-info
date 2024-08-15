@@ -1,0 +1,10 @@
+.controlledHeader {
+  letter-spacing: 2px;
+  text-decoration: underline;
+}
+
+.backToMainButton {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}

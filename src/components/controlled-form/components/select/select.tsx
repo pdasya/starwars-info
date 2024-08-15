@@ -23,7 +23,7 @@ interface SelectFieldProps {
   error?: FieldError;
 }
 
-const SelectField: React.FC<SelectFieldProps> = ({
+const Select: React.FC<SelectFieldProps> = ({
   label,
   id,
   options,
@@ -45,4 +45,4 @@ const SelectField: React.FC<SelectFieldProps> = ({
   </div>
 );
 
-export default SelectField;
+export default Select;
