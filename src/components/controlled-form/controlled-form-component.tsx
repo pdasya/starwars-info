@@ -5,19 +5,24 @@ import Select from "../select/select";
 import validationSchema from "../../utils/validationSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import AutocompleteSelect from "../auto-complete/auto-complete";
 
 const ControlledFormComponent: FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = (data: unknown) => {
+  const onSubmit = (data: any) => {
     console.log(data);
   };
+
+  const currentCountry = watch("country");
 
   return (
     <form
@@ -89,13 +94,18 @@ const ControlledFormComponent: FC = () => {
         )}
       </div>
 
-      <Select
-        label="Country"
-        id="country"
-        options={["USA", "Germany", "France"]}
-        register={register}
-        error={errors.country}
-      />
+      <div className={style.autoCompleteWrapper}>
+        <AutocompleteSelect
+          id="country"
+          label="Country"
+          value={currentCountry || ""}
+          onChange={(value: string) => setValue("country", value)}
+          register={register}
+        />
+        {errors.country && (
+          <span className={style.errorMessage}>{errors.country.message}</span>
+        )}
+      </div>
 
       <button type="submit" className={style.submitButton}>
         Submit
