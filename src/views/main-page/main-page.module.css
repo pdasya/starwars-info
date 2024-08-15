@@ -1,27 +1,42 @@
 .mainPageWrapper {
+  padding: 20px;
+}
+
+.buttonWrapper {
+  margin-bottom: 20px;
   display: flex;
-  flex-direction: column;
+  gap: 20px;
+}
+
+.formDataDisplay {
+  margin-top: 20px;
+}
+
+.cardsContainer {
+  display: flex;
   flex-wrap: wrap;
   gap: 20px;
 }
 
-.buttonWrapper {
-  display: flex;
-  gap: 20px;
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  width: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.card p {
+  margin: 5px 0;
 }
 
 .uploadedImage {
+  margin-top: 10px;
   width: 200px;
   height: 200px;
-}
-
-.formDataDisplay {
-  width: 300px;
-  font-size: 14px;
-  letter-spacing: 3px;
-
-  border: 2px solid snow;
-  border-radius: 10px;
-
-  padding: 10px;
+  border-radius: 4px;
 }

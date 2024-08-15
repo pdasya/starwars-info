@@ -28,11 +28,12 @@ const ControlledFormComponent: FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid, isSubmitted },
     setValue,
     watch,
   } = useForm<FormData>({
     resolver: yupResolver(validationSchema),
+    mode: "all",
   });
 
   const onSubmit = (data: FormData) => {
@@ -137,7 +138,11 @@ const ControlledFormComponent: FC = () => {
         )}
       </div>
 
-      <button type="submit" className={style.submitButton}>
+      <button
+        type="submit"
+        className={style.submitButton}
+        disabled={isSubmitted && !isValid}
+      >
         Submit
       </button>
     </form>

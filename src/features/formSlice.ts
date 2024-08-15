@@ -13,11 +13,11 @@ interface FormData {
 }
 
 interface FormState {
-  formData: FormData | null;
+  formData: FormData[];
 }
 
 const initialState: FormState = {
-  formData: null,
+  formData: [],
 };
 
 const formSlice = createSlice({
@@ -25,7 +25,7 @@ const formSlice = createSlice({
   initialState,
   reducers: {
     saveFormData: (state, action: PayloadAction<FormData>) => {
-      state.formData = action.payload;
+      state.formData.push(action.payload);
     },
   },
 });
