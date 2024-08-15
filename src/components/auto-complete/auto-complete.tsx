@@ -5,10 +5,22 @@ import { fetchCountries } from "../../features/countrySlice";
 import { UseFormRegister } from "react-hook-form";
 import style from "./auto-complete.module.css";
 
+interface FormData {
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  gender: string;
+  termsAccepted: boolean;
+  picture: FileList;
+  country: string;
+}
+
 interface AutocompleteSelectProps {
   id: string;
   label: string;
-  register: UseFormRegister<any>;
+  register: UseFormRegister<FormData>;
   onChange: (value: string) => void;
   value: string;
 }

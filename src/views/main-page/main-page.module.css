@@ -1,4 +1,27 @@
+.mainPageWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
 .buttonWrapper {
   display: flex;
   gap: 20px;
+}
+
+.uploadedImage {
+  width: 200px;
+  height: 200px;
+}
+
+.formDataDisplay {
+  width: 300px;
+  font-size: 14px;
+  letter-spacing: 3px;
+
+  border: 2px solid snow;
+  border-radius: 10px;
+
+  padding: 10px;
 }

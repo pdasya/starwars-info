@@ -12,24 +12,20 @@ interface FormData {
   country: string;
 }
 
-const initialFormData: FormData = {
-  name: "",
-  age: 0,
-  email: "",
-  password: "",
-  confirmPassword: "",
-  gender: "",
-  termsAccepted: false,
-  picture: "",
-  country: "",
+interface FormState {
+  formData: FormData | null;
+}
+
+const initialState: FormState = {
+  formData: null,
 };
 
 const formSlice = createSlice({
-  name: "formData",
-  initialState: initialFormData,
+  name: "form",
+  initialState,
   reducers: {
-    saveFormData(state, action: PayloadAction<FormData>) {
-      return action.payload;
+    saveFormData: (state, action: PayloadAction<FormData>) => {
+      state.formData = action.payload;
     },
   },
 });

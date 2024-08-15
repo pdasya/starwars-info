@@ -29,18 +29,17 @@ const validationSchema = Yup.object().shape({
 
   gender: Yup.string().required("Please select your gender"),
 
-  termsAccepted: Yup.bool().oneOf(
-    [true],
-    "You must accept the terms and conditions",
-  ),
+  termsAccepted: Yup.boolean()
+    .required("You must accept the terms and conditions")
+    .oneOf([true], "You must accept the terms and conditions"),
 
-  picture: Yup.mixed()
+  picture: Yup.mixed<FileList>()
     .required("Please upload a picture")
     .test(
       "fileSize",
       "File size must be less than 2MB",
-      (value: unknown): boolean => {
-        if (!(value instanceof FileList) || value.length === 0) {
+      (value: FileList | undefined): boolean => {
+        if (!value || value.length === 0) {
           return false;
         }
         return value[0].size < 2 * 1024 * 1024;
@@ -49,8 +48,8 @@ const validationSchema = Yup.object().shape({
     .test(
       "fileType",
       "File must be a .png or .jpeg",
-      (value: unknown): boolean => {
-        if (!(value instanceof FileList) || value.length === 0) {
+      (value: FileList | undefined): boolean => {
+        if (!value || value.length === 0) {
           return false;
         }
         return ["image/jpeg", "image/png"].includes(value[0].type);

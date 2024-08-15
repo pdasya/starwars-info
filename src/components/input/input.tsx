@@ -2,11 +2,23 @@ import { FC } from "react";
 import style from "./input.module.css";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
+interface FormData {
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  gender: string;
+  termsAccepted: boolean;
+  picture: FileList;
+  country: string;
+}
+
 interface InputFieldProps {
   label: string;
-  id: string;
+  id: keyof FormData;
   type?: string;
-  register: UseFormRegister<any>;
+  register: UseFormRegister<FormData>;
   validation?: object;
   error?: FieldError;
 }

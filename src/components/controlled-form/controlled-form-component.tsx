@@ -6,20 +6,50 @@ import validationSchema from "../../utils/validationSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import AutocompleteSelect from "../auto-complete/auto-complete";
+import { useDispatch } from "react-redux";
+import { saveFormData } from "../../features/formSlice";
+import { useNavigate } from "react-router-dom";
+
+interface FormData {
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  gender: string;
+  termsAccepted: boolean;
+  picture: FileList;
+  country: string;
+}
 
 const ControlledFormComponent: FC = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
     watch,
-  } = useForm({
+  } = useForm<FormData>({
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = (data: FormData) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      const formDataWithImage = {
+        ...data,
+        picture: base64String,
+      };
+      dispatch(saveFormData(formDataWithImage));
+      navigate("/");
+    };
+
+    if (data.picture[0]) {
+      reader.readAsDataURL(data.picture[0]);
+    }
   };
 
   const currentCountry = watch("country");
@@ -65,7 +95,7 @@ const ControlledFormComponent: FC = () => {
       <Select
         label="Gender"
         id="gender"
-        options={["Male", "Female", "Other"]}
+        options={["male", "female", "other"]}
         register={register}
         error={errors.gender}
       />
