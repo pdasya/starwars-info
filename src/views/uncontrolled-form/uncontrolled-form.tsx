@@ -11,7 +11,7 @@ const UncontrolledForm: FC = () => {
         to="/main"
         className={style.backToMainButton}
       ></Button>
-      <h3 className={style.controlledHeader}>uncontrolled Form Page</h3>
+      <h3 className={style.uncontrolledHeader}>uncontrolled Form Page</h3>
       <UncontrolledFormComponent />
     </>
   );

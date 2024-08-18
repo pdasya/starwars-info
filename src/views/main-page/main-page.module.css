@@ -26,6 +26,14 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.lastCard {
+  border: 1px solid red;
+  border-radius: 8px;
+  padding: 20px;
+  width: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .card h3 {
   margin-top: 0;
 }

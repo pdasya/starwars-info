@@ -1,6 +1,7 @@
-.controlledHeader {
+.uncontrolledHeader {
   letter-spacing: 2px;
   text-decoration: underline;
+  text-transform: lowercase;
 }
 
 .backToMainButton {
