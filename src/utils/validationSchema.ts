@@ -7,7 +7,7 @@ const validationSchema = Yup.object().shape({
 
   age: Yup.number()
     .required("Age is required")
-    .min(0, "Age must be non-negative"),
+    .min(1, "Age must be non-negative"),
 
   email: Yup.string()
     .required("Email is required")
@@ -34,7 +34,7 @@ const validationSchema = Yup.object().shape({
     .oneOf([true], "You must accept the terms and conditions"),
 
   picture: Yup.mixed<FileList>()
-    .required("Please upload a picture")
+    .required("Picture is required")
     .test(
       "fileSize",
       "File size must be less than 2MB",
@@ -56,7 +56,7 @@ const validationSchema = Yup.object().shape({
       },
     ),
 
-  country: Yup.string().required("Please select your country"),
+  country: Yup.string().required("Country is required"),
 });
 
 export default validationSchema;

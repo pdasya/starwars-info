@@ -60,9 +60,7 @@
 
 .errorMessage {
   color: red;
-  font-size: 12px;
-  min-height: 18px;
-  margin-top: 5px;
+  font-size: 16px;
 }
 
 .autoCompleteWrapper {

@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC, useRef, useState } from "react";
 import Input from "./components/input/input";
 import Select from "./components/select/select";
 import { useDispatch } from "react-redux";
@@ -6,6 +6,8 @@ import { saveUncontrolledFormData } from "../../features/uncontrolledFormSlice";
 import { useNavigate } from "react-router-dom";
 import AutocompleteSelect from "./components/auto-complete/auto-complete";
 import style from "./uncontrolled-form.module.css";
+import validationSchema from "../../utils/validationSchema";
+import * as Yup from "yup";
 
 interface FormData {
   name: string;
@@ -22,6 +24,9 @@ interface FormData {
 const UncontrolledFormComponent: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [errors, setErrors] = useState<{ [key: string]: string | undefined }>(
+    {},
+  );
 
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
@@ -33,7 +38,7 @@ const UncontrolledFormComponent: FC = () => {
   const pictureRef = useRef<HTMLInputElement>(null);
   const countryRef = useRef<HTMLInputElement>(null);
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const data: FormData = {
@@ -48,25 +53,40 @@ const UncontrolledFormComponent: FC = () => {
       country: countryRef.current?.value || "",
     };
 
-    if (data.picture[0]) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        const formDataWithImage = {
-          ...data,
-          picture: base64String,
+    try {
+      await validationSchema.validate(data, { abortEarly: false });
+
+      if (data.picture[0]) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result as string;
+          const formDataWithImage = {
+            ...data,
+            picture: base64String,
+          };
+          dispatch(saveUncontrolledFormData(formDataWithImage));
+          navigate("/");
         };
-        dispatch(saveUncontrolledFormData(formDataWithImage));
+        reader.readAsDataURL(data.picture[0]);
+      } else {
+        const formDataWithoutImage = {
+          ...data,
+          picture: "",
+        };
+        dispatch(saveUncontrolledFormData(formDataWithoutImage));
         navigate("/");
-      };
-      reader.readAsDataURL(data.picture[0]);
-    } else {
-      const formDataWithoutImage = {
-        ...data,
-        picture: "",
-      };
-      dispatch(saveUncontrolledFormData(formDataWithoutImage));
-      navigate("/");
+      }
+    } catch (validationErrors) {
+      const formattedErrors: Record<string, string> = {};
+
+      if (validationErrors instanceof Yup.ValidationError) {
+        validationErrors.inner.forEach((error) => {
+          if (error.path && error.message) {
+            formattedErrors[error.path] = error.message;
+          }
+        });
+      }
+      setErrors(formattedErrors);
     }
   };
 
@@ -74,14 +94,21 @@ const UncontrolledFormComponent: FC = () => {
     <form className={style.controlledFormWrapper} onSubmit={onSubmit}>
       <div className={style.inputWrapper}>
         <Input label="Name" id="name" ref={nameRef} />
+        {errors.name && (
+          <span className={style.errorMessage}>{errors.name}</span>
+        )}
       </div>
 
       <div className={style.inputWrapper}>
         <Input label="Age" id="age" type="number" ref={ageRef} />
+        {errors.age && <span className={style.errorMessage}>{errors.age}</span>}
       </div>
 
       <div className={style.inputWrapper}>
         <Input label="Email" id="email" type="email" ref={emailRef} />
+        {errors.email && (
+          <span className={style.errorMessage}>{errors.email}</span>
+        )}
       </div>
 
       <div className={style.inputWrapper}>
@@ -91,6 +118,9 @@ const UncontrolledFormComponent: FC = () => {
           type="password"
           ref={passwordRef}
         />
+        {errors.password && (
+          <span className={style.errorMessage}>{errors.password}</span>
+        )}
       </div>
 
       <div className={style.inputWrapper}>
@@ -100,6 +130,9 @@ const UncontrolledFormComponent: FC = () => {
           type="password"
           ref={confirmPasswordRef}
         />
+        {errors.confirmPassword && (
+          <span className={style.errorMessage}>{errors.confirmPassword}</span>
+        )}
       </div>
 
       <div className={style.inputWrapper}>
@@ -109,6 +142,9 @@ const UncontrolledFormComponent: FC = () => {
           options={["male", "female", "other"]}
           ref={genderRef}
         />
+        {errors.gender && (
+          <span className={style.errorMessage}>{errors.gender}</span>
+        )}
       </div>
 
       <div className={style.checkboxWrapper}>
@@ -116,11 +152,17 @@ const UncontrolledFormComponent: FC = () => {
           <input id="termsAccepted" type="checkbox" ref={termsAcceptedRef} />
           <label htmlFor="termsAccepted">Accept Terms and Conditions</label>
         </div>
+        {errors.termsAccepted && (
+          <span className={style.errorMessage}>{errors.termsAccepted}</span>
+        )}
       </div>
 
       <div className={style.pictureWrapper}>
         <label htmlFor="picture">Upload Picture</label>
         <input id="picture" type="file" ref={pictureRef} />
+        {errors.picture && (
+          <span className={style.errorMessage}>{errors.picture}</span>
+        )}
       </div>
 
       <div className={style.autoCompleteWrapper}>
@@ -134,6 +176,9 @@ const UncontrolledFormComponent: FC = () => {
           }}
           ref={countryRef}
         />
+        {errors.country && (
+          <span className={style.errorMessage}>{errors.country}</span>
+        )}
       </div>
 
       <button type="submit" className={style.submitButton}>
