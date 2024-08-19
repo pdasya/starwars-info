@@ -1,0 +1,70 @@
+.controlledFormWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 450px;
+}
+
+.checkboxWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.checkboxContent {
+  display: flex;
+  justify-content: flex-start;
+  gap: 5px;
+  font-size: 20px;
+}
+
+.pictureWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+
+  text-transform: lowercase;
+}
+
+.submitButton {
+  cursor: pointer;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: lowercase;
+
+  color: white;
+  font-weight: 700;
+  background-color: #242424;
+  width: auto;
+  border-radius: 10px;
+  padding: 7px 9px;
+
+  font-family: "StarJedi";
+
+  transition:
+    color 1s ease-in,
+    -webkit-text-stroke 1s ease-in;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: white;
+  -webkit-text-stroke: 1px black;
+  color: transparent;
+  letter-spacing: 2px;
+}
+
+.submitButton:disabled {
+  background-color: gray;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 16px;
+}
+
+.autoCompleteWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}

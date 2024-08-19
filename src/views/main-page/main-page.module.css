@@ -1,0 +1,50 @@
+.mainPageWrapper {
+  padding: 20px;
+}
+
+.buttonWrapper {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.formDataDisplay {
+  margin-top: 20px;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  width: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.lastCard {
+  border: 1px solid red;
+  border-radius: 8px;
+  padding: 20px;
+  width: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.card p {
+  margin: 5px 0;
+}
+
+.uploadedImage {
+  margin-top: 10px;
+  width: 200px;
+  height: 200px;
+  border-radius: 4px;
+}

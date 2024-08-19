@@ -1,0 +1,11 @@
+.uncontrolledHeader {
+  letter-spacing: 2px;
+  text-decoration: underline;
+  text-transform: lowercase;
+}
+
+.backToMainButton {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}

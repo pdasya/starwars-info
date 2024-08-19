@@ -1,0 +1,31 @@
+@font-face {
+  font-family: "StarJedi";
+  src: url("/Starjedi.ttf");
+}
+
+.button {
+  cursor: pointer;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: lowercase;
+
+  color: white;
+  font-weight: 700;
+  background-color: #242424;
+  width: auto;
+  border-radius: 10px;
+  padding: 7px 9px;
+
+  font-family: "StarJedi";
+
+  transition:
+    color 1s ease-in,
+    -webkit-text-stroke 1s ease-in;
+}
+
+.button:hover {
+  background-color: white;
+  -webkit-text-stroke: 1px black;
+  color: transparent;
+  letter-spacing: 2px;
+}

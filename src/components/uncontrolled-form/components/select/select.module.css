@@ -1,0 +1,23 @@
+.selectWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.select {
+  background: white;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  padding: 12px;
+  width: 100%;
+  font-size: 18px;
+  color: black;
+  border-radius: 5px;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 20px;
+}
